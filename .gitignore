@@ -1,0 +1,35 @@
+# Dependências
+node_modules/
+
+# Builds e pacotes gerados
+dist/
+dist-electron/
+release/
+out/
+
+# Cache e relatório de ferramentas
+.vite/
+coverage/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Variáveis de ambiente locais
+.env
+.env.*
+!.env.example
+
+# Configuração local do editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+#Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos temporários do Office
+~$*
