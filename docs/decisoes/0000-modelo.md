@@ -1,7 +1,7 @@
 # NNNN — Título da decisão
  
 - **Status:** proposta | aceita | substituída por NNNN
-- **Data:** AAAA-MM-DD
+- **Data:** DD-MM-AAAA
  
 ## Contexto
  
