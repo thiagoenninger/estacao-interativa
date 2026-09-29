@@ -1,0 +1,29 @@
+.stage-window {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--color-background-secondary);
+}
+
+.stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  background: var(--color-background-primary);
+}
+
+.stage-diagnostics {
+  position: fixed;
+  right: 8px;
+  bottom: 8px;
+  padding: 4px 8px;
+  font: 16px/1.4 monospace;
+  color: var(--color-text-primary);
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-text-primary);
+  pointer-events: none;
+}
