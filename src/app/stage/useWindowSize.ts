@@ -5,21 +5,36 @@ export interface WindowSize {
   height: number;
 }
 
-let last: WindowSize = { width: window.innerWidth, height: window.innerHeight };
-
-function subscribe(onChange: () => void): () => void {
-  window.addEventListener('resize', onChange);
-  return () => window.removeEventListener('resize', onChange);
+function measure(): WindowSize {
+  return { width: window.innerWidth, height: window.innerHeight };
 }
 
-// Always return the same object while the size does not change
-function readSize(): WindowSize {
-  if (last.width !== window.innerWidth || last.height !== window.innerHeight) {
-    last = { width: window.innerHeight, height: window.innerHeight };
+/**
+ * The snapshot is replaced ONLY here, inside the resize handler. React calls `getSnapshot`
+ * several times per render and requires the same result each time. Reading
+ * `window.innerWidth` directly in `getSnapshot` breaks that during a real window drag,
+ * because the size can change between two consecutive reads.
+ */
+let snapshot: WindowSize = measure();
+
+function subscribe(onChange: () => void): () => void {
+  function handleResize() {
+    const next = measure();
+    if (next.width === snapshot.width && next.height === snapshot.height) return;
+    snapshot = next;
+    onChange();
   }
-  return last;
+
+  window.addEventListener('resize', handleResize);
+  // The window may have changed between the module load and this subscription.
+  handleResize();
+  return () => window.removeEventListener('resize', handleResize);
+}
+
+function getSnapshot(): WindowSize {
+  return snapshot;
 }
 
 export function useWindowSize(): WindowSize {
-  return useSyncExternalStore(subscribe, readSize);
+  return useSyncExternalStore(subscribe, getSnapshot);
 }
