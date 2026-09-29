@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-electron
+release
+coverage
+package-lock.json
+
+# Documentação em Markdown segue o próprio padrão (docs/ e README)
+docs
+*.md
