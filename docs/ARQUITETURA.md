@@ -45,15 +45,24 @@ Modelo normalizado: Elemento, Material, FonteMineral, RotaDeObtenção, Objeto, 
 
 Instalador publicado no Github Releases. Atualização remota prevista para a Etapa 24.
 
-## Estrutura atual do código (Etapa 02)
+## Estrutura atual do código (Etapa 03)
 
-| Pasta                | Conteúdo                                                        |
-| -------------------- | --------------------------------------------------------------- |
-| `src/app/`           | Inicialização da aplicação (`App.tsx`)                          |
-| `src/app/stage/`     | Palco 1920 × 1080 (`Stage`), cálculo de escala e grade de depuração |
-| `src/design-system/` | Medidas do grid (`measures.ts`) e tokens de cor (`tokens.css`)  |
-| `src/styles/`        | Estilos globais                                                 |
-| `src/test/`          | Preparação comum dos testes                                     |
+| Pasta                            | Conteúdo                                                                  |
+| -------------------------------- | ------------------------------------------------------------------------- |
+| `assets/fonts/`                  | Fontes IBM Plex em WOFF2 e a licença                                      |
+| `assets/icons/`                  | Os 12 ícones do Design System (SVG, `icon-*.svg`)                         |
+| `assets/textures/`               | Retícula e marca de registro do fundo                                     |
+| `src/app/`                       | Inicialização da aplicação (`App.tsx`)                                    |
+| `src/app/stage/`                 | Palco 1920 × 1080 (`Stage`), cálculo de escala e grade de depuração       |
+| `src/design-system/`             | Medidas do grid, `fonts.css` e `tokens.css` (reúne `tokens/`)             |
+| `src/design-system/tokens/`      | Cor, tipografia, espaço e forma, movimento (CSS: fonte dos tokens)        |
+| `src/design-system/icons/`       | Componente `Icon` e lista dos nomes                                       |
+| `src/design-system/buttons/`     | `Button`, `IconButton`, `BackButton`, `HomeButton` e a regra de toque     |
+| `src/design-system/background/`  | `Background`: retícula e marcas de registro                               |
+| `src/motion/`                    | Espelho em TypeScript dos tokens de movimento                             |
+| `src/dev/showcase/`              | Vitrine de validação, aberta com `?showcase` (ADR 0012)                   |
+| `src/styles/`                    | Estilos globais                                                           |
+| `src/test/`                      | Preparação comum dos testes e utilitários de leitura de CSS               |
 
 ## Palco e escala
 
@@ -69,3 +78,24 @@ As medidas do Design System ficam num só arquivo, `measures.ts`, com testes.
 `npm run check` roda, em sequência: conferência de tipos (TypeScript),
 lint (ESLint), formatação (Prettier) e testes (Vitest). Toda etapa termina
 com esse comando passando.
+
+## Tokens, fontes e componentes base (Etapa 03)
+
+Os tokens do Design System vivem em CSS (`src/design-system/tokens/`), reunidos por
+`tokens.css` e importados uma vez em `main.tsx`. As primitivas só definem tokens
+semânticos; o código de interface usa sempre o semântico. O movimento tem um
+espelho em TypeScript (`src/motion/tokens.ts`), conferido por teste contra o CSS
+(ADR 0010).
+
+As fontes são arquivos WOFF2 versionados em `assets/fonts/`, declarados em
+`fonts.css`, sem nenhum acesso à rede (ADR 0011). Os 12 estilos de texto são
+classes CSS (`.type-display`, `.type-body`, `.type-interactive-label`…).
+
+Os componentes base são o `Icon` (SVG embutido, herda a cor do texto), o `Button`
+e suas variações (`IconButton`, `BackButton`, `HomeButton`) e o `Background`.
+O botão segue a regra de toque do Design System: fica pressionado assim que o
+dedo encosta, executa a ação ao soltar dentro do botão, cancela se o dedo sair
+e ignora um segundo toque enquanto o primeiro estiver ativo.
+
+A vitrine (`?showcase`) exibe tudo isso dentro do Palco e é carregada sob demanda
+(ADR 0012).

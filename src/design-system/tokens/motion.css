@@ -1,0 +1,14 @@
+:root {
+  --duration-instant: 80ms;
+  --duration-fast: 160ms;
+  --duration-heat: 200ms;
+  --duration-base: 320ms;
+  --duration-medium: 480ms;
+  --duration-slow: 700ms;
+  --duration-slower: 1000ms;
+  --stagger-step: 50ms;
+
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-enter: cubic-bezier(0, 0, 0.2, 1);
+  --easing-exit: cubic-bezier(0.4, 0, 1, 1);
+}

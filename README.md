@@ -4,7 +4,7 @@ Experiência interativa para instalação permanente da Casa de Metal: telas
 touchscreen em modo quiosque onde visitantes investigam objetos cotidianos e
 descobrem os metais e minerais que os compõem.
 
-> **Status:** em desenvolvimento — Etapa 02 de 25.
+> **Status:** em desenvolvimento — Etapa 03 de 25.
 
 ## Escopo
 
@@ -30,21 +30,25 @@ npm install          # primeira vez, ou quando o package.json mudar
 npm run dev          # servidor de desenvolvimento em http://localhost:5173
 ```
 
-Grade de depuração: abra `http://localhost:5173/?grid` ou aperte a tecla G.
+Ferramentas de desenvolvimento, na URL ou no teclado:
 
-| Comando                | O que faz                                      |
-| ---------------------- | ---------------------------------------------- |
-| `npm run dev`          | Servidor de desenvolvimento                    |
-| `npm run build`        | Confere os tipos e gera a versão de produção   |
-| `npm run preview`      | Serve a versão de produção gerada              |
-| `npm run check`        | Tipos, lint, formatação e testes (tudo junto)  |
-| `npm run format`       | Formata o código com o Prettier                |
-| `npm run test:watch`   | Testes em modo contínuo                        |
+- Grade de depuração: `http://localhost:5173/?grid` ou a tecla G.
+- Vitrine do Design System (cores, tipografia, ícones, botões): `http://localhost:5173/?showcase`.
+
+| Comando              | O que faz                                     |
+| -------------------- | --------------------------------------------- |
+| `npm run dev`        | Servidor de desenvolvimento                   |
+| `npm run build`      | Confere os tipos e gera a versão de produção  |
+| `npm run preview`    | Serve a versão de produção gerada             |
+| `npm run check`      | Tipos, lint, formatação e testes (tudo junto) |
+| `npm run format`     | Formata o código com o Prettier               |
+| `npm run test:watch` | Testes em modo contínuo                       |
 
 ## Convenções
 
 - Código (nomes de arquivos, pastas, variáveis, componentes, comentários e commits) em inglês.
 - Documentação e textos da experiência em português (ADR 0009).
+- Fontes, ícones e texturas ficam em `assets/`; nenhum recurso é carregado da rede.
 
 ## Documentação
 
@@ -60,3 +64,5 @@ Grade de depuração: abra `http://localhost:5173/?grid` ou aperte a tecla G.
 ## Licença
 
 Uso restrito. Todos os direitos reservados. Licença a definir pela instituição.
+As fontes IBM Plex têm licença própria (SIL Open Font License 1.1), em
+`assets/fonts/LICENSE.txt`.

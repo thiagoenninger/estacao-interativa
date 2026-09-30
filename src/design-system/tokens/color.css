@@ -1,0 +1,38 @@
+:root {
+  /*primitive colors * mineral pallet*/
+  --paper-50: #f2f3ee;
+  --paper-100: #e6e7e1;
+  --paper-200: #d9dbd3;
+  --paper-300: #b3b7ac;
+  --pencil-500: #646861;
+  --graphite-700: #454943;
+  --ink-900: #1c1e1b;
+  --oxide-500: #a33a22;
+  --oxide-700: #7f2c18;
+  --malachite-600: #2f6b55;
+  --white: #ffffff;
+
+  /* semantic */
+  --color-background-primary: var(--paper-100);
+  --color-background-secondary: var(--paper-200);
+  --color-surface: var(--paper-50);
+  --color-text-primary: var(--ink-900);
+  --color-text-secondary: var(--graphite-700);
+  --color-text-tertiary: var(--pencil-500);
+  --color-text-accent: var(--oxide-500);
+  --color-text-inverse: var(--paper-50);
+  --color-orbit-line: color-mix(in srgb, var(--ink-900) 28%, transparent);
+  --color-orbit-active: var(--oxide-500);
+  --color-divider: var(--paper-300);
+  --color-divider-strong: var(--ink-900);
+  --color-border-interactive: var(--ink-900);
+  --color-border-interactive-secondary: var(--graphite-700);
+  --color-state-active: var(--oxide-500);
+  --color-state-pressed: var(--oxide-700);
+  --color-hotspot-core: var(--oxide-500);
+  --color-hotspot-ring: color-mix(in srgb, var(--oxide-500) 90%, transparent);
+  --color-hotspot-ring-outer: color-mix(in srgb, var(--oxide-500) 35%, transparent);
+  --color-hotspot-halo: color-mix(in srgb, var(--paper-50) 70%, transparent);
+  --color-feedback-connection: var(--malachite-600);
+  --color-pattern-lattice: color-mix(in srgb, var(--ink-900) 16%, transparent);
+}

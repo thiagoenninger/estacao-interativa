@@ -1,0 +1,59 @@
+/*  Space, shape and touch. No arbitrary value outside these scales.*/
+:root {
+  /*space * base 8*/
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 80px;
+  --space-11: 96px;
+  --space-12: 128px;
+
+  /* radius */
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-full: 9999px;
+
+  /* stroke */
+  --stroke-hairline: 1px;
+  --stroke-thin: 1.5px;
+  --stroke-regular: 2px;
+  --stroke-strong: 3px;
+
+  /* opacity*/
+  --opacity-full: 1;
+  --opacity-material-secondary: 0.5;
+  --opacity-universe-muted: 0.2;
+  --opacity-universe-muted-panel: 0.15;
+  --opacity-object-recede: 0.2;
+  --opacity-disabled: 0.4;
+  --opacity-orbit: 0.28;
+  --opacity-lattice: 0.16;
+
+  /* depth*/
+  --depth-0: 0;
+  --depth-10: 10;
+  --depth-20: 20;
+  --depth-30: 30;
+  --depth-40: 40;
+  --depth-50: 50;
+  --depth-60: 60;
+  --depth-70: 70;
+  --depth-80: 80;
+  --depth-90: 90;
+
+  /* icon size*/
+  --icon-sm: 20px;
+  --icon-md: 28px;
+  --icon-lg: 32px;
+
+  /* touch targets*/
+  --touch-target-min: 64px;
+  --touch-gap-min: 24px;
+}
