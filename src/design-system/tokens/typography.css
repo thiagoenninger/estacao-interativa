@@ -1,0 +1,73 @@
+/*Typography. Twelve styles cover the whole experience: no size outside this table.
+Standing rules: no italics, no justified text, no automatic hyphenation. */
+
+/* Foundations 02 · Typography. Twelve styles cover the whole experience: no size outside this table.
+   Standing rules: no italics, no justified text, no automatic hyphenation. */
+:root {
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-condensed: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+.type-display {
+  font: 700 96px/100px var(--font-sans);
+  letter-spacing: -0.03em;
+}
+
+.type-heading-1 {
+  font: 400 56px/64px var(--font-sans);
+  letter-spacing: -0.015em;
+}
+
+.type-heading-2 {
+  font: 500 40px/48px var(--font-sans);
+  letter-spacing: -0.01em;
+}
+
+.type-heading-3 {
+  font: 600 28px/36px var(--font-sans);
+  letter-spacing: 0;
+}
+
+.type-material-name {
+  font: 300 72px/76px var(--font-sans);
+  letter-spacing: -0.02em;
+}
+
+.type-object-name {
+  font: 500 18px/24px var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.type-body-large {
+  font: 400 28px/40px var(--font-sans);
+  letter-spacing: 0;
+}
+
+.type-body {
+  font: 400 24px/36px var(--font-sans);
+  letter-spacing: 0;
+}
+
+.type-overline {
+  font: 500 16px/24px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.type-data {
+  font: 400 18px/24px var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.type-caption {
+  font: 400 18px/26px var(--font-sans);
+  letter-spacing: 0;
+}
+
+.type-interactive-label {
+  font: 600 20px/24px var(--font-condensed);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
