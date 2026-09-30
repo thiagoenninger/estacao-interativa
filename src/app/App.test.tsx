@@ -44,4 +44,61 @@ describe('App · Stage', () => {
     render(<App />);
     expect(screen.getByTestId('debug-grid')).toBeTruthy();
   });
+
+  it('draws the background behind everything', () => {
+    render(<App />);
+    expect(screen.getByTestId('stage').firstElementChild).toBe(screen.getByTestId('background'));
+  });
+
+  it('does not load the showcase without ?showcase', () => {
+    render(<App />);
+    expect(screen.queryByTestId('showcase')).toBeNull();
+  });
+});
+
+describe('App · Showcase', () => {
+  beforeEach(() => {
+    setWindowSize(1920, 1080);
+    window.history.pushState({}, '', '/?showcase');
+  });
+
+  it('opens the showcase with ?showcase, on the Colors tab', async () => {
+    render(<App />);
+    expect(await screen.findByTestId('showcase')).toBeTruthy();
+    expect(screen.getByTestId('showcase-tab-colors')).toBeTruthy();
+    expect(screen.getAllByTestId('primitive-swatch')).toHaveLength(11);
+    expect(screen.getAllByTestId('semantic-token')).toHaveLength(22);
+  });
+
+  it('switches tabs with the base buttons', async () => {
+    render(<App />);
+    await screen.findByTestId('showcase');
+    const tab = (name: string) => screen.getByRole('tab', { name });
+
+    fireEvent.click(tab('Tipografia'), { detail: 0 });
+    expect(screen.getByTestId('showcase-tab-typography')).toBeTruthy();
+    expect(screen.getAllByTestId('type-sample')).toHaveLength(12);
+
+    fireEvent.click(tab('Ícones'), { detail: 0 });
+    expect(screen.getAllByTestId('icon-cell')).toHaveLength(12);
+
+    fireEvent.click(tab('Botões'), { detail: 0 });
+    expect(screen.getByTestId('press-counter').textContent).toContain('0');
+
+    fireEvent.click(tab('Fundo'), { detail: 0 });
+    expect(screen.getByTestId('background-legend')).toBeTruthy();
+    expect(tab('Fundo').getAttribute('aria-selected')).toBe('true');
+  });
+
+  it('counts only the touches that end inside the button', async () => {
+    render(<App />);
+    await screen.findByTestId('showcase');
+    fireEvent.click(screen.getByRole('tab', { name: 'Botões' }), { detail: 0 });
+    const button = screen.getByRole('button', { name: /tocar aqui/i });
+    fireEvent.pointerDown(button, { pointerId: 1, clientX: 0, clientY: 0 });
+    fireEvent.pointerUp(button, { pointerId: 1, clientX: 0, clientY: 0 });
+    fireEvent.pointerDown(button, { pointerId: 2, clientX: 0, clientY: 0 });
+    fireEvent.pointerUp(button, { pointerId: 2, clientX: 900, clientY: 900 });
+    expect(screen.getByTestId('press-counter').textContent).toContain('1');
+  });
 });

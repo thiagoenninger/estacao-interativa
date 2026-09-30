@@ -1,0 +1,213 @@
+/* Internal validation showcase (?showcase). Development tool, not part of the experience. */
+.showcase {
+  position: absolute;
+  top: var(--space-9);
+  left: var(--space-9);
+  width: 1792px;
+  height: 952px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  color: var(--color-text-primary);
+}
+
+.showcase-tabs {
+  display: flex;
+  gap: var(--space-4);
+  flex: none;
+}
+
+.showcase-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.showcase-heading {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text-secondary);
+}
+
+.showcase-note {
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-secondary);
+}
+
+.showcase-columns {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.showcase-columns--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.showcase-columns--typography {
+  grid-template-columns: 980px 1fr;
+}
+
+.showcase-columns--4 {
+  grid-template-columns: 1fr 1fr 1.5fr 1fr;
+}
+
+.showcase-section {
+  margin-bottom: var(--space-6);
+}
+
+.showcase-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-6);
+}
+
+.showcase-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.showcase-caption {
+  color: var(--color-text-secondary);
+}
+
+/* colors */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  gap: var(--space-3);
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.swatch-color {
+  height: var(--space-10);
+  border: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.token-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2) var(--space-6);
+}
+
+.token-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--space-8);
+}
+
+.token-row-color {
+  flex: none;
+  width: var(--space-8);
+  height: var(--space-7);
+  border: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.token-row-text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* typography */
+.type-sample {
+  margin-bottom: var(--space-4);
+}
+
+.type-sample-spec {
+  margin-top: var(--space-1);
+  color: var(--color-text-tertiary);
+}
+
+.font-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.font-status-item[data-loaded='true'] {
+  color: var(--color-feedback-connection);
+}
+
+.font-status-item[data-loaded='false'] {
+  color: var(--color-state-active);
+}
+
+/* space and shape */
+.space-bar-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--space-6);
+}
+
+.space-label {
+  flex: none;
+  width: var(--space-11);
+  white-space: nowrap;
+}
+
+.space-bar {
+  height: var(--space-3);
+  background: var(--color-text-primary);
+}
+
+.shape-box {
+  width: var(--space-10);
+  height: var(--space-10);
+  border: var(--stroke-regular) solid var(--color-text-primary);
+}
+
+.opacity-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  white-space: nowrap;
+}
+
+.opacity-box {
+  flex: none;
+  width: var(--space-10);
+  height: var(--space-8);
+  background: var(--color-text-primary);
+}
+
+/* background tab */
+.showcase-legend {
+  display: inline-block;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: var(--stroke-hairline) solid var(--color-divider);
+}
+
+/* icons */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-6);
+}
+
+.icon-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.icon-touch-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
+  border: var(--stroke-hairline) dashed var(--color-divider);
+  color: var(--color-text-primary);
+}
