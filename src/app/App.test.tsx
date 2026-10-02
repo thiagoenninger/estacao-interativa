@@ -90,6 +90,30 @@ describe('App · Showcase', () => {
     expect(tab('Fundo').getAttribute('aria-selected')).toBe('true');
   });
 
+  it('shows the validated content on the Content tab', async () => {
+    render(<App />);
+    await screen.findByTestId('showcase');
+    fireEvent.click(screen.getByRole('tab', { name: 'Conteúdo' }), { detail: 0 });
+
+    expect(screen.getByTestId('showcase-tab-content')).toBeTruthy();
+    expect(screen.getByTestId('content-summary').textContent).toContain('0 erros');
+
+    // The bicycle opens first: three enabled materials and a complete sheet.
+    const nodes = screen.getAllByTestId('orbit-node');
+    expect(nodes.map((node) => node.getAttribute('data-state'))).toEqual([
+      'enabled',
+      'enabled',
+      'enabled',
+    ]);
+    expect(screen.getByTestId('content-sheet').textContent).toContain('2,70 g/cm³');
+    expect(screen.getAllByTestId('sheet-layer')[0]?.getAttribute('data-status')).toBe('available');
+
+    // The car has only draft sheets, so every node is disabled.
+    fireEvent.click(screen.getByRole('button', { name: 'Automóvel' }), { detail: 0 });
+    const carNodes = screen.getAllByTestId('orbit-node');
+    expect(carNodes.every((node) => node.getAttribute('data-state') === 'disabled')).toBe(true);
+  });
+
   it('counts only the touches that end inside the button', async () => {
     render(<App />);
     await screen.findByTestId('showcase');
