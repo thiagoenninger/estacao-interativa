@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210" height="320" viewBox="0 0 210 320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" role="img" aria-label="lata">
+<title>lata</title>
+<g id="level-0-universe"><g id="body" data-material="aluminium" data-stroke="line" stroke-width="4.33"><path d="M22 44 V258 Q105 288 188 258 V44"/></g><g id="lid" data-material="aluminium" data-stroke="line" stroke-width="4.33"><ellipse cx="105" cy="44" rx="83" ry="24"/></g><g id="pull-ring" data-material="aluminium" data-stroke="fine" stroke-width="2.69"><ellipse cx="105" cy="40" rx="26" ry="9"/><path d="M105 31 v-6"/></g></g>
+<g id="level-1-structure"><g id="neck" data-material="aluminium" data-stroke="fine" stroke-width="2.69"><path d="M30 62 Q105 84 180 62"/><path d="M26 74 Q105 96 184 74"/></g><g id="seam" data-material="aluminium" data-stroke="fine" stroke-width="2.69"><path d="M24 246 Q105 274 186 246"/></g></g>
+<g id="level-2-internal" style="display:none"><g id="lacquer" data-material="polymers" data-stroke="dashed" stroke-width="2.69" stroke-dasharray="7 6"><path d="M32 60 V254 Q105 280 178 254 V60"/></g><g id="wall" data-material="aluminium" data-stroke="fine" stroke-width="2.69"><path d="M27 70 V252 M183 70 V252"/></g></g>
+</svg>

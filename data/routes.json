@@ -1,0 +1,196 @@
+{
+  "routes": [
+    {
+      "id": "aluminium-primary",
+      "materialId": "aluminium",
+      "sourceIds": ["bauxite"],
+      "steps": [
+        {
+          "kind": "extraction",
+          "label": "Mineração da bauxita"
+        },
+        {
+          "kind": "refining",
+          "label": "Processo Bayer: a bauxita vira alumina"
+        },
+        {
+          "kind": "transformation",
+          "label": "Eletrólise: a alumina vira alumínio metálico"
+        },
+        {
+          "kind": "recycling",
+          "label": "Reciclagem por refusão da sucata"
+        }
+      ],
+      "intermediates": ["Alumina (Al₂O₃)"]
+    },
+    {
+      "id": "steel-blast-furnace",
+      "materialId": "steel",
+      "sourceIds": ["iron-ore"],
+      "steps": [
+        {
+          "kind": "extraction",
+          "label": "Mineração do minério de ferro"
+        },
+        {
+          "kind": "beneficiation",
+          "label": "Britagem e pelotização"
+        },
+        {
+          "kind": "refining",
+          "label": "Alto-forno: o minério vira ferro-gusa"
+        },
+        {
+          "kind": "transformation",
+          "label": "Aciaria: ajuste do carbono e laminação"
+        },
+        {
+          "kind": "recycling",
+          "label": "Reciclagem da sucata em forno elétrico"
+        }
+      ],
+      "intermediates": ["Ferro-gusa"]
+    },
+    {
+      "id": "copper-smelting",
+      "materialId": "copper",
+      "sourceIds": ["chalcopyrite"],
+      "steps": [
+        {
+          "kind": "extraction",
+          "label": "Mineração da calcopirita"
+        },
+        {
+          "kind": "beneficiation",
+          "label": "Moagem e flotação do concentrado"
+        },
+        {
+          "kind": "refining",
+          "label": "Fundição e refino eletrolítico"
+        },
+        {
+          "kind": "transformation",
+          "label": "Trefilação em fios"
+        },
+        {
+          "kind": "recycling",
+          "label": "Reciclagem de fios e tubos"
+        }
+      ],
+      "intermediates": ["Concentrado de cobre", "Cobre blister"]
+    },
+    {
+      "id": "lithium-from-spodumene",
+      "materialId": "lithium",
+      "sourceIds": ["spodumene"],
+      "steps": [
+        {
+          "kind": "extraction",
+          "label": "Mineração do espodumênio"
+        },
+        {
+          "kind": "beneficiation",
+          "label": "Concentração do mineral"
+        },
+        {
+          "kind": "refining",
+          "label": "Conversão química em carbonato ou hidróxido de lítio"
+        }
+      ],
+      "intermediates": ["Concentrado de espodumênio"]
+    },
+    {
+      "id": "lithium-from-brine",
+      "materialId": "lithium",
+      "sourceIds": ["lithium-brine"],
+      "steps": [
+        {
+          "kind": "extraction",
+          "label": "Bombeamento da salmoura"
+        },
+        {
+          "kind": "beneficiation",
+          "label": "Evaporação em tanques"
+        },
+        {
+          "kind": "refining",
+          "label": "Purificação e conversão em carbonato de lítio"
+        }
+      ],
+      "intermediates": []
+    },
+    {
+      "id": "cobalt-refining",
+      "materialId": "cobalt",
+      "sourceIds": ["cobaltite"],
+      "steps": [
+        {
+          "kind": "extraction",
+          "label": "Mineração (o cobalto costuma sair junto com cobre e níquel)"
+        },
+        {
+          "kind": "beneficiation",
+          "label": "Concentração do minério"
+        },
+        {
+          "kind": "refining",
+          "label": "Refino hidrometalúrgico do cobalto"
+        },
+        {
+          "kind": "recycling",
+          "label": "Reciclagem de baterias e ligas"
+        }
+      ],
+      "intermediates": []
+    },
+    {
+      "id": "gold-mining",
+      "materialId": "gold",
+      "sourceIds": ["native-gold"],
+      "steps": [
+        {
+          "kind": "extraction",
+          "label": "Mineração do ouro nativo"
+        },
+        {
+          "kind": "beneficiation",
+          "label": "Britagem e concentração"
+        },
+        {
+          "kind": "refining",
+          "label": "Extração e refino do ouro"
+        },
+        {
+          "kind": "recycling",
+          "label": "Reciclagem de joias e eletrônicos"
+        }
+      ],
+      "intermediates": []
+    },
+    {
+      "id": "neodymium-rare-earth",
+      "materialId": "neodymium",
+      "sourceIds": ["monazite"],
+      "steps": [
+        {
+          "kind": "extraction",
+          "label": "Mineração de monazita e de outros minerais de terras raras"
+        },
+        {
+          "kind": "beneficiation",
+          "label": "Concentração do mineral"
+        },
+        {
+          "kind": "refining",
+          "label": "Separação química das terras raras"
+        },
+        {
+          "kind": "transformation",
+          "label": "Produção de ímãs de neodímio, ferro e boro"
+        }
+      ],
+      "intermediates": []
+    }
+  ]
+}

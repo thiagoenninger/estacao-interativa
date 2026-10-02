@@ -1,0 +1,504 @@
+{
+  "investigations": [
+    {
+      "objectId": "bicycle",
+      "materialId": "aluminium",
+      "order": 1,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "Quadro",
+          "groups": ["frame"]
+        },
+        {
+          "n": 2,
+          "label": "Aros das rodas",
+          "groups": ["rims"]
+        },
+        {
+          "n": 3,
+          "label": "Guidão e mesa",
+          "groups": ["handlebar"]
+        }
+      ],
+      "why": "Tem cerca de um terço da densidade do aço e resiste bem à corrosão: um quadro leve, fácil de carregar e durável ao tempo.",
+      "layers": [],
+      "related": ["can", "laptop", "phone", "car"]
+    },
+    {
+      "objectId": "bicycle",
+      "materialId": "steel",
+      "order": 2,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "Corrente e transmissão",
+          "groups": ["chain", "drivetrain"]
+        },
+        {
+          "n": 2,
+          "label": "Raios e cubos",
+          "groups": ["spokes", "hubs"]
+        },
+        {
+          "n": 3,
+          "label": "Garfo",
+          "groups": ["fork"]
+        },
+        {
+          "n": 4,
+          "label": "Freios",
+          "groups": ["brakes"]
+        }
+      ],
+      "why": "O aço aguenta esforços repetidos e custa pouco: por isso aparece onde a bicicleta é puxada, apertada e freada o tempo todo.",
+      "layers": [],
+      "related": ["car", "pot", "watch", "laptop"]
+    },
+    {
+      "objectId": "bicycle",
+      "materialId": "copper",
+      "order": 3,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "Fiação",
+          "groups": ["cables"]
+        },
+        {
+          "n": 2,
+          "label": "Farol",
+          "groups": ["headlight"]
+        }
+      ],
+      "why": "O cobre conduz eletricidade com pouca perda e se dobra sem quebrar: bom para a fiação que leva energia ao farol.",
+      "layers": [],
+      "related": ["laptop", "headphones", "phone", "car"]
+    },
+    {
+      "objectId": "laptop",
+      "materialId": "aluminium",
+      "order": 1,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["lid"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["base"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["can", "phone", "car"]
+    },
+    {
+      "objectId": "laptop",
+      "materialId": "gold",
+      "order": 2,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["processor"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["memory"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["phone"]
+    },
+    {
+      "objectId": "laptop",
+      "materialId": "lithium",
+      "order": 3,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["battery"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["phone", "watch"]
+    },
+    {
+      "objectId": "laptop",
+      "materialId": "copper",
+      "order": 4,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["ports"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["cooler"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["headphones", "phone", "car"]
+    },
+    {
+      "objectId": "laptop",
+      "materialId": "steel",
+      "order": 5,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["hinge"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["car", "pot", "watch"]
+    },
+    {
+      "objectId": "can",
+      "materialId": "aluminium",
+      "order": 1,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["body"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["lid"]
+        },
+        {
+          "n": 3,
+          "label": "[COMPONENTE]",
+          "groups": ["pull-ring"]
+        },
+        {
+          "n": 4,
+          "label": "[COMPONENTE]",
+          "groups": ["neck"]
+        },
+        {
+          "n": 5,
+          "label": "[COMPONENTE]",
+          "groups": ["seam"]
+        },
+        {
+          "n": 6,
+          "label": "[COMPONENTE]",
+          "groups": ["wall"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["laptop", "phone", "car"]
+    },
+    {
+      "objectId": "phone",
+      "materialId": "aluminium",
+      "order": 1,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["body"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["button"]
+        },
+        {
+          "n": 3,
+          "label": "[COMPONENTE]",
+          "groups": ["side-frame"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["can", "laptop", "car"]
+    },
+    {
+      "objectId": "phone",
+      "materialId": "gold",
+      "order": 2,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["chip"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["traces"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["laptop"]
+    },
+    {
+      "objectId": "phone",
+      "materialId": "lithium",
+      "order": 3,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["battery"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["laptop", "watch"]
+    },
+    {
+      "objectId": "phone",
+      "materialId": "copper",
+      "order": 4,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["connectors"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["coil"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["laptop", "headphones", "car"]
+    },
+    {
+      "objectId": "pot",
+      "materialId": "steel",
+      "order": 1,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["body"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["rim"]
+        },
+        {
+          "n": 3,
+          "label": "[COMPONENTE]",
+          "groups": ["rivets"]
+        },
+        {
+          "n": 4,
+          "label": "[COMPONENTE]",
+          "groups": ["interior"]
+        },
+        {
+          "n": 5,
+          "label": "[COMPONENTE]",
+          "groups": ["steel-base"]
+        },
+        {
+          "n": 6,
+          "label": "[COMPONENTE]",
+          "groups": ["handle-core"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["car", "watch", "laptop"]
+    },
+    {
+      "objectId": "pot",
+      "materialId": "aluminium",
+      "order": 2,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["aluminium-base"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["can", "laptop", "phone", "car"]
+    },
+    {
+      "objectId": "car",
+      "materialId": "steel",
+      "order": 1,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["body"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["doors"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["pot", "watch", "laptop"]
+    },
+    {
+      "objectId": "car",
+      "materialId": "aluminium",
+      "order": 2,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["wheels"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["engine"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["can", "laptop", "phone"]
+    },
+    {
+      "objectId": "car",
+      "materialId": "copper",
+      "order": 3,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["radiator"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["laptop", "headphones", "phone"]
+    },
+    {
+      "objectId": "headphones",
+      "materialId": "neodymium",
+      "order": 1,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["driver"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": []
+    },
+    {
+      "objectId": "headphones",
+      "materialId": "copper",
+      "order": 2,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["cable"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["coil"]
+        },
+        {
+          "n": 3,
+          "label": "[COMPONENTE]",
+          "groups": ["wiring"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["laptop", "phone", "car"]
+    },
+    {
+      "objectId": "headphones",
+      "materialId": "aluminium",
+      "order": 3,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["slider"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["can", "laptop", "phone", "car"]
+    },
+    {
+      "objectId": "watch",
+      "materialId": "steel",
+      "order": 1,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["case"]
+        },
+        {
+          "n": 2,
+          "label": "[COMPONENTE]",
+          "groups": ["hands"]
+        },
+        {
+          "n": 3,
+          "label": "[COMPONENTE]",
+          "groups": ["crown"]
+        },
+        {
+          "n": 4,
+          "label": "[COMPONENTE]",
+          "groups": ["markers"]
+        },
+        {
+          "n": 5,
+          "label": "[COMPONENTE]",
+          "groups": ["movement"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["car", "pot", "laptop"]
+    },
+    {
+      "objectId": "watch",
+      "materialId": "lithium",
+      "order": 2,
+      "presentIn": [
+        {
+          "n": 1,
+          "label": "[COMPONENTE]",
+          "groups": ["watch-battery"]
+        }
+      ],
+      "why": "[TEXTO — curadoria, até 180 caracteres]",
+      "layers": [],
+      "related": ["phone", "laptop"]
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { Button } from '../../design-system/buttons/Button';
 import { BackgroundTab } from './BackgroundTab';
 import { ButtonsTab } from './ButtonsTab';
 import { ColorsTab } from './ColorsTab';
+import { ContentTab } from './ContentTab';
 import { IconsTab } from './IconsTab';
 import { SpaceShapeTab } from './SpaceShapeTab';
 import { TypographyTab } from './TypographyTab';
@@ -15,6 +16,7 @@ const TABS = [
   ['background', 'Fundo', BackgroundTab],
   ['icons', 'Ícones', IconsTab],
   ['buttons', 'Botões', ButtonsTab],
+  ['content', 'Conteúdo', ContentTab],
 ] as const;
 
 type TabId = (typeof TABS)[number][0];

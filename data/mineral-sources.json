@@ -1,0 +1,103 @@
+{
+  "mineralSources": [
+    {
+      "id": "gibbsite",
+      "name": "Gibbsita",
+      "kind": "mineral",
+      "formula": "Al(OH)₃",
+      "constituents": [],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "boehmite",
+      "name": "Boemita",
+      "kind": "mineral",
+      "formula": "AlO(OH)",
+      "constituents": [],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "bauxite",
+      "name": "Bauxita",
+      "kind": "ore",
+      "formula": null,
+      "constituents": ["gibbsite", "boehmite"],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "hematite",
+      "name": "Hematita",
+      "kind": "mineral",
+      "formula": "Fe₂O₃",
+      "constituents": [],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "iron-ore",
+      "name": "Minério de ferro",
+      "kind": "ore",
+      "formula": null,
+      "constituents": ["hematite"],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "chalcopyrite",
+      "name": "Calcopirita",
+      "kind": "mineral",
+      "formula": "CuFeS₂",
+      "constituents": [],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "spodumene",
+      "name": "Espodumênio",
+      "kind": "mineral",
+      "formula": "LiAlSi₂O₆",
+      "constituents": [],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "lithium-brine",
+      "name": "Salmoura de lítio",
+      "kind": "brine",
+      "formula": null,
+      "constituents": [],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "cobaltite",
+      "name": "Cobaltita",
+      "kind": "mineral",
+      "formula": "CoAsS",
+      "constituents": [],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "native-gold",
+      "name": "Ouro nativo",
+      "kind": "mineral",
+      "formula": "Au",
+      "constituents": [],
+      "image": null,
+      "occurrence": null
+    },
+    {
+      "id": "monazite",
+      "name": "Monazita",
+      "kind": "mineral",
+      "formula": "(Ce,La,Nd,Th)PO₄",
+      "constituents": [],
+      "image": null,
+      "occurrence": null
+    }
+  ]
+}

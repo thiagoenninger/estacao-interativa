@@ -1,0 +1,84 @@
+{
+  "objects": [
+    {
+      "id": "bicycle",
+      "name": "Bicicleta",
+      "svg": "object-bicycle.svg",
+      "plane": "near",
+      "position": {
+        "x": 560,
+        "y": 640
+      }
+    },
+    {
+      "id": "laptop",
+      "name": "Notebook",
+      "svg": "object-laptop.svg",
+      "plane": "mid",
+      "position": {
+        "x": 1210,
+        "y": 520
+      }
+    },
+    {
+      "id": "can",
+      "name": "Lata",
+      "svg": "object-can.svg",
+      "plane": "far",
+      "position": {
+        "x": 1000,
+        "y": 860
+      }
+    },
+    {
+      "id": "phone",
+      "name": "Celular",
+      "svg": "object-phone.svg",
+      "plane": "far",
+      "position": {
+        "x": 1560,
+        "y": 250
+      }
+    },
+    {
+      "id": "pot",
+      "name": "Panela",
+      "svg": "object-pot.svg",
+      "plane": "mid",
+      "position": {
+        "x": 1580,
+        "y": 830
+      }
+    },
+    {
+      "id": "car",
+      "name": "Automóvel",
+      "svg": "object-car.svg",
+      "plane": "near",
+      "position": {
+        "x": 300,
+        "y": 900
+      }
+    },
+    {
+      "id": "headphones",
+      "name": "Fone de ouvido",
+      "svg": "object-headphones.svg",
+      "plane": "far",
+      "position": {
+        "x": 1210,
+        "y": 200
+      }
+    },
+    {
+      "id": "watch",
+      "name": "Relógio",
+      "svg": "object-watch.svg",
+      "plane": "far",
+      "position": {
+        "x": 1770,
+        "y": 540
+      }
+    }
+  ]
+}

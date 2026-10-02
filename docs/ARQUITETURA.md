@@ -45,24 +45,29 @@ Modelo normalizado: Elemento, Material, FonteMineral, RotaDeObtenção, Objeto, 
 
 Instalador publicado no Github Releases. Atualização remota prevista para a Etapa 24.
 
-## Estrutura atual do código (Etapa 03)
+## Estrutura atual do código (Etapa 04)
 
-| Pasta                            | Conteúdo                                                                  |
-| -------------------------------- | ------------------------------------------------------------------------- |
-| `assets/fonts/`                  | Fontes IBM Plex em WOFF2 e a licença                                      |
-| `assets/icons/`                  | Os 12 ícones do Design System (SVG, `icon-*.svg`)                         |
-| `assets/textures/`               | Retícula e marca de registro do fundo                                     |
-| `src/app/`                       | Inicialização da aplicação (`App.tsx`)                                    |
-| `src/app/stage/`                 | Palco 1920 × 1080 (`Stage`), cálculo de escala e grade de depuração       |
-| `src/design-system/`             | Medidas do grid, `fonts.css` e `tokens.css` (reúne `tokens/`)             |
-| `src/design-system/tokens/`      | Cor, tipografia, espaço e forma, movimento (CSS: fonte dos tokens)        |
-| `src/design-system/icons/`       | Componente `Icon` e lista dos nomes                                       |
-| `src/design-system/buttons/`     | `Button`, `IconButton`, `BackButton`, `HomeButton` e a regra de toque     |
-| `src/design-system/background/`  | `Background`: retícula e marcas de registro                               |
-| `src/motion/`                    | Espelho em TypeScript dos tokens de movimento                             |
-| `src/dev/showcase/`              | Vitrine de validação, aberta com `?showcase` (ADR 0012)                   |
-| `src/styles/`                    | Estilos globais                                                           |
-| `src/test/`                      | Preparação comum dos testes e utilitários de leitura de CSS               |
+| Pasta                           | Conteúdo                                                                  |
+| ------------------------------- | ------------------------------------------------------------------------- |
+| `assets/fonts/`                 | Fontes IBM Plex em WOFF2 e a licença                                      |
+| `assets/icons/`                 | Os 12 ícones do Design System (SVG, `icon-*.svg`)                         |
+| `assets/textures/`              | Retícula e marca de registro do fundo                                     |
+| `assets/objects/`               | Os 8 desenhos de objetos (SVG, `object-*.svg`)                            |
+| `assets/materials/`             | As 7 esferas de material (PNG, `material-*-sphere.png`)                   |
+| `data/`                         | O conteúdo da experiência em JSON normalizado (ADR 0013)                  |
+| `scripts/`                      | `validate-content.ts`: valida `data/` contra `assets/` antes do build     |
+| `src/app/`                      | Inicialização da aplicação (`App.tsx`)                                    |
+| `src/app/stage/`                | Palco 1920 × 1080 (`Stage`), cálculo de escala e grade de depuração       |
+| `src/content/`                  | Esquemas (Zod), validador, consultas e carregamento do conteúdo           |
+| `src/design-system/`            | Medidas do grid, `fonts.css` e `tokens.css` (reúne `tokens/`)             |
+| `src/design-system/tokens/`     | Cor, tipografia, espaço e forma, movimento (CSS: fonte dos tokens)        |
+| `src/design-system/icons/`      | Componente `Icon` e lista dos nomes                                       |
+| `src/design-system/buttons/`    | `Button`, `IconButton`, `BackButton`, `HomeButton` e a regra de toque     |
+| `src/design-system/background/` | `Background`: retícula e marcas de registro                               |
+| `src/motion/`                   | Espelho em TypeScript dos tokens de movimento                             |
+| `src/dev/showcase/`             | Vitrine de validação, aberta com `?showcase` (ADR 0012)                   |
+| `src/styles/`                   | Estilos globais                                                           |
+| `src/test/`                     | Preparação comum dos testes e utilitários de leitura de CSS               |
 
 ## Palco e escala
 
@@ -99,3 +104,30 @@ e ignora um segundo toque enquanto o primeiro estiver ativo.
 
 A vitrine (`?showcase`) exibe tudo isso dentro do Palco e é carregada sob demanda
 (ADR 0012).
+
+## Modelo de dados e conteúdo (Etapa 04)
+
+O conteúdo da experiência vive em `data/`, em sete arquivos JSON normalizados
+(`meta`, `elements`, `materials`, `mineral-sources`, `routes`, `objects`,
+`investigations`). O desenho e o conteúdo se ligam só por ids: o id do material
+(`data-material`) e o id do grupo (`id` do grupo no SVG). Nenhum texto de objeto
+ou material fica no código (ADR 0013).
+
+`src/content/` tem quatro camadas, cada uma em seus arquivos:
+
+1. **Forma** (`schemas.ts`, `parse.ts`): esquemas Zod, um por arquivo. Campo
+   desconhecido, tipo errado ou id fora do padrão falham aqui.
+2. **Regras** (`validate.ts`, `rules.ts`, `svg-index.ts`): ids que existem, limites
+   do Design System, ligação com os grupos dos SVGs e escopo curatorial (C1).
+   Cada problema tem um código estável (`unknown-material`, `why-too-long`…).
+3. **Consultas** (`queries.ts`): a única porta de leitura para o resto da
+   aplicação. Devolve a órbita de um objeto, com cada material `enabled` ou
+   `disabled`, e a ficha de um material em um objeto, com camadas
+   `available` ou `coming-soon`.
+4. **Carregamento** (`load.ts`, `check.ts`): o Vite lê `data/` e `assets/` na
+   compilação; `loadContent()` valida e só então monta as consultas.
+
+A validação roda em três lugares: no `npm run build` (um erro impede o build), no
+`npm run check` e no navegador (aba Conteúdo da vitrine). Em desenvolvimento, texto
+de rascunho (`[TEXTO — curadoria]`) é aviso; na versão final
+(`npm run validate:release`), é erro.
