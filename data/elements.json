@@ -1,0 +1,44 @@
+{
+  "elements": [
+    {
+      "symbol": "Al",
+      "name": "Alumínio",
+      "atomicNumber": 13
+    },
+    {
+      "symbol": "Fe",
+      "name": "Ferro",
+      "atomicNumber": 26
+    },
+    {
+      "symbol": "C",
+      "name": "Carbono",
+      "atomicNumber": 6
+    },
+    {
+      "symbol": "Cu",
+      "name": "Cobre",
+      "atomicNumber": 29
+    },
+    {
+      "symbol": "Li",
+      "name": "Lítio",
+      "atomicNumber": 3
+    },
+    {
+      "symbol": "Co",
+      "name": "Cobalto",
+      "atomicNumber": 27
+    },
+    {
+      "symbol": "Au",
+      "name": "Ouro",
+      "atomicNumber": 79
+    },
+    {
+      "symbol": "Nd",
+      "name": "Neodímio",
+      "atomicNumber": 60
+    }
+  ]
+}

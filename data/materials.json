@@ -1,0 +1,438 @@
+{
+  "materials": [
+    {
+      "id": "aluminium",
+      "name": "Alumínio",
+      "category": "metal",
+      "family": "Metal leve",
+      "symbol": "Al",
+      "classification": "Metal não ferroso",
+      "composition": ["Al"],
+      "sphere": "material-aluminium-sphere.png",
+      "facts": [
+        {
+          "label": "Densidade",
+          "value": "2,70 g/cm³"
+        },
+        {
+          "label": "Ponto de fusão",
+          "value": "660 °C"
+        },
+        {
+          "label": "Origem principal",
+          "value": "Bauxita"
+        }
+      ],
+      "layers": [
+        {
+          "id": "origin",
+          "title": "De onde vem?",
+          "text": "O alumínio vem da bauxita, uma rocha avermelhada rica em óxidos de alumínio. Grandes jazidas ficam em regiões tropicais, como Austrália, Guiné, China e Brasil.",
+          "image": null,
+          "credit": null,
+          "sourceIds": ["bauxite"],
+          "routeIds": []
+        },
+        {
+          "id": "production",
+          "title": "Como é produzido?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": ["aluminium-primary"]
+        },
+        {
+          "id": "uses",
+          "title": "Onde mais é usado?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        },
+        {
+          "id": "curiosities",
+          "title": "Curiosidades",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        }
+      ]
+    },
+    {
+      "id": "steel",
+      "name": "Aço",
+      "category": "alloy",
+      "family": "Liga de ferro",
+      "symbol": "Fe–C",
+      "classification": "Liga de ferro e carbono",
+      "composition": ["Fe", "C"],
+      "sphere": "material-steel-sphere.png",
+      "facts": [
+        {
+          "label": "Densidade",
+          "value": "cerca de 7,85 g/cm³"
+        },
+        {
+          "label": "Ponto de fusão",
+          "value": "cerca de 1.500 °C"
+        },
+        {
+          "label": "Origem principal",
+          "value": "Minério de ferro"
+        }
+      ],
+      "layers": [
+        {
+          "id": "origin",
+          "title": "De onde vem?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": ["iron-ore"],
+          "routeIds": []
+        },
+        {
+          "id": "production",
+          "title": "Como é produzido?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": ["steel-blast-furnace"]
+        },
+        {
+          "id": "uses",
+          "title": "Onde mais é usado?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        },
+        {
+          "id": "curiosities",
+          "title": "Curiosidades",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        }
+      ]
+    },
+    {
+      "id": "copper",
+      "name": "Cobre",
+      "category": "metal",
+      "family": "Metal de transição",
+      "symbol": "Cu",
+      "classification": "Metal não ferroso",
+      "composition": ["Cu"],
+      "sphere": "material-copper-sphere.png",
+      "facts": [
+        {
+          "label": "Densidade",
+          "value": "8,96 g/cm³"
+        },
+        {
+          "label": "Ponto de fusão",
+          "value": "1.085 °C"
+        },
+        {
+          "label": "Origem principal",
+          "value": "Calcopirita"
+        }
+      ],
+      "layers": [
+        {
+          "id": "origin",
+          "title": "De onde vem?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": ["chalcopyrite"],
+          "routeIds": []
+        },
+        {
+          "id": "production",
+          "title": "Como é produzido?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": ["copper-smelting"]
+        },
+        {
+          "id": "uses",
+          "title": "Onde mais é usado?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        },
+        {
+          "id": "curiosities",
+          "title": "Curiosidades",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        }
+      ]
+    },
+    {
+      "id": "lithium",
+      "name": "Lítio",
+      "category": "metal",
+      "family": "Metal alcalino",
+      "symbol": "Li",
+      "classification": "Metal leve",
+      "composition": ["Li"],
+      "sphere": "material-lithium-sphere.png",
+      "facts": [
+        {
+          "label": "Densidade",
+          "value": "[VALOR]"
+        },
+        {
+          "label": "Ponto de fusão",
+          "value": "[VALOR]"
+        },
+        {
+          "label": "Origem principal",
+          "value": "Espodumênio e salmouras"
+        }
+      ],
+      "layers": [
+        {
+          "id": "origin",
+          "title": "De onde vem?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": ["spodumene", "lithium-brine"],
+          "routeIds": []
+        },
+        {
+          "id": "production",
+          "title": "Como é produzido?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": ["lithium-from-spodumene", "lithium-from-brine"]
+        },
+        {
+          "id": "uses",
+          "title": "Onde mais é usado?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        },
+        {
+          "id": "curiosities",
+          "title": "Curiosidades",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        }
+      ]
+    },
+    {
+      "id": "cobalt",
+      "name": "Cobalto",
+      "category": "metal",
+      "family": "Metal de transição",
+      "symbol": "Co",
+      "classification": "Metal estratégico",
+      "composition": ["Co"],
+      "sphere": "material-cobalt-sphere.png",
+      "facts": [
+        {
+          "label": "Densidade",
+          "value": "[VALOR]"
+        },
+        {
+          "label": "Ponto de fusão",
+          "value": "[VALOR]"
+        },
+        {
+          "label": "Origem principal",
+          "value": "Cobaltita"
+        }
+      ],
+      "layers": [
+        {
+          "id": "origin",
+          "title": "De onde vem?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": ["cobaltite"],
+          "routeIds": []
+        },
+        {
+          "id": "production",
+          "title": "Como é produzido?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": ["cobalt-refining"]
+        },
+        {
+          "id": "uses",
+          "title": "Onde mais é usado?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        },
+        {
+          "id": "curiosities",
+          "title": "Curiosidades",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        }
+      ]
+    },
+    {
+      "id": "gold",
+      "name": "Ouro",
+      "category": "metal",
+      "family": "Metal nobre",
+      "symbol": "Au",
+      "classification": "Metal precioso",
+      "composition": ["Au"],
+      "sphere": "material-gold-sphere.png",
+      "facts": [
+        {
+          "label": "Densidade",
+          "value": "[VALOR]"
+        },
+        {
+          "label": "Ponto de fusão",
+          "value": "[VALOR]"
+        },
+        {
+          "label": "Origem principal",
+          "value": "Ouro nativo"
+        }
+      ],
+      "layers": [
+        {
+          "id": "origin",
+          "title": "De onde vem?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": ["native-gold"],
+          "routeIds": []
+        },
+        {
+          "id": "production",
+          "title": "Como é produzido?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": ["gold-mining"]
+        },
+        {
+          "id": "uses",
+          "title": "Onde mais é usado?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        },
+        {
+          "id": "curiosities",
+          "title": "Curiosidades",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        }
+      ]
+    },
+    {
+      "id": "neodymium",
+      "name": "Neodímio",
+      "category": "metal",
+      "family": "Terra rara",
+      "symbol": "Nd",
+      "classification": "Metal de terras raras",
+      "composition": ["Nd"],
+      "sphere": "material-neodymium-sphere.png",
+      "facts": [
+        {
+          "label": "Densidade",
+          "value": "[VALOR]"
+        },
+        {
+          "label": "Ponto de fusão",
+          "value": "[VALOR]"
+        },
+        {
+          "label": "Origem principal",
+          "value": "Monazita"
+        }
+      ],
+      "layers": [
+        {
+          "id": "origin",
+          "title": "De onde vem?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": ["monazite"],
+          "routeIds": []
+        },
+        {
+          "id": "production",
+          "title": "Como é produzido?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": ["neodymium-rare-earth"]
+        },
+        {
+          "id": "uses",
+          "title": "Onde mais é usado?",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        },
+        {
+          "id": "curiosities",
+          "title": "Curiosidades",
+          "text": "[TEXTO — curadoria]",
+          "image": null,
+          "credit": null,
+          "sourceIds": [],
+          "routeIds": []
+        }
+      ]
+    }
+  ]
+}
