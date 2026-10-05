@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { Icon } from './Icon';
-import { ICON_NAMES, ICON_SIZE } from './icon-names';
-import { getIconMarkup, getIconSource, listIconFileNames } from './icon-source';
+import { Icon } from '@/design-system/icons/Icon';
+import { ICON_NAMES, ICON_SIZE } from '@/design-system/icons/icon-names';
+import { getIconMarkup, getIconSource, listIconFileNames } from '@/design-system/icons/icon-source';
 
 describe('icon set (Foundations 05)', () => {
   it('has exactly the 12 icons, one file each', () => {

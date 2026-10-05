@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { loadContent } from './load.ts';
-import { LIMITS } from './rules.ts';
+import { loadContent } from '@/content/load.ts';
+import { LIMITS } from '@/content/rules.ts';
 
 /**
  * Tests over the REAL data in data/. Only what must stay true while the curatorship fills

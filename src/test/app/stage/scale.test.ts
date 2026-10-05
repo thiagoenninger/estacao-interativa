@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { calculateScale } from './scale';
+import { calculateScale } from '@/app/stage/scale';
 
 describe('calculateScale', () => {
   it('Full HD: factor 1 and no offset', () => {

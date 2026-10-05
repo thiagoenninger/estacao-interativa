@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { hasText, isDraft } from './text.ts';
+import { hasText, isDraft } from '@/content/text.ts';
 
 describe('draft markers', () => {
   it('recognizes text between square brackets', () => {

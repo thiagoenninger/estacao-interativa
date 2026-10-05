@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createContentIndex } from './queries.ts';
+import { createContentIndex } from '@/content/queries.ts';
 import { makeValid } from './test-fixtures.ts';
 
 function setup() {

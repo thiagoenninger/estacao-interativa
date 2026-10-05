@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { parseCustomProperties } from '../test/css';
-import motionCss from '../design-system/tokens/motion.css?raw';
-import { DURATION, EASING, IDLE, STAGGER_STEP } from './tokens';
+import { parseCustomProperties } from '@/test/css';
+import motionCss from '@/design-system/tokens/motion.css?raw';
+import { DURATION, EASING, IDLE, STAGGER_STEP } from '@/motion/tokens';
 
 const css = parseCustomProperties(motionCss);
 const normalize = (value: string | undefined) => (value ?? '').replace(/\s+/g, '');

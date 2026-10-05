@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { Button } from './Button';
-import { IconButton } from './IconButton';
-import { BackButton, HomeButton } from './NavigationButtons';
+import { Button } from '@/design-system/buttons/Button';
+import { IconButton } from '@/design-system/buttons/IconButton';
+import { BackButton, HomeButton } from '@/design-system/buttons/NavigationButtons';
 
 const inside = { pointerId: 1, clientX: 0, clientY: 0 };
 const outside = { pointerId: 1, clientX: 500, clientY: 500 };

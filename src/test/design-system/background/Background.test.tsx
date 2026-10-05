@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { Background } from './Background';
+import { Background } from '@/design-system/background/Background';
 
 describe('Background', () => {
   it('draws a registration mark in each of the four corners', () => {

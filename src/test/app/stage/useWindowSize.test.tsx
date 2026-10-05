@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { useWindowSize } from './useWindowSize';
+import { useWindowSize } from '@/app/stage/useWindowSize';
 
 function Probe() {
   const { width, height } = useWindowSize();
