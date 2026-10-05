@@ -7,7 +7,7 @@ import {
   SAFE_AREA,
   STAGE,
   TEXT_COLUMN,
-} from './measures';
+} from '@/design-system/measures';
 
 describe('Design System measures', () => {
   it('the safe area is 1792 × 952', () => {

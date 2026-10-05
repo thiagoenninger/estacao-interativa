@@ -1,8 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { baseName, checkContent, toRawContent } from './check.ts';
+import { baseName, buildEnv, checkContent, toRawContent } from '@/content/check.ts';
 import { makeValid, svg } from './test-fixtures.ts';
-import { buildEnv } from './check.ts';
-import { hasErrors, summarizeIssues, validateContent, type Issue } from './validate.ts';
+import { hasErrors, summarizeIssues, validateContent, type Issue } from '@/content/validate.ts';
 
 function codes(issues: Issue[]): string[] {
   return issues.map((issue) => issue.code);

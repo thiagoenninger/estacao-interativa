@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import fontsCss from './fonts.css?raw';
+import fontsCss from '@/design-system/fonts.css?raw';
 
 /** Font files that really exist in assets/fonts (glob keys are the existing paths). */
-const files = Object.keys(import.meta.glob('../../assets/fonts/*.woff2', { query: '?url' }));
+const files = Object.keys(import.meta.glob('../../../assets/fonts/*.woff2', { query: '?url' }));
 const existing = new Set(files.map((path) => path.split('/').pop()));
 
 const declared = [...fontsCss.matchAll(/@font-face\s*\{([^}]*)\}/g)].map((match) => {

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { contrastRatio, parseCustomProperties } from '../test/css';
-import colorCss from './tokens/color.css?raw';
-import motionCss from './tokens/motion.css?raw';
-import spaceShapeCss from './tokens/space-shape.css?raw';
+import { contrastRatio, parseCustomProperties } from '@/test/css';
+import colorCss from '@/design-system/tokens/color.css?raw';
+import motionCss from '@/design-system/tokens/motion.css?raw';
+import spaceShapeCss from '@/design-system/tokens/space-shape.css?raw';
 
 const color = parseCustomProperties(colorCss);
 const spaceShape = parseCustomProperties(spaceShapeCss);

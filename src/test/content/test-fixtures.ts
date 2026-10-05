@@ -1,6 +1,6 @@
-import { buildEnv } from './check.ts';
-import type { Content } from './schemas.ts';
-import type { ContentEnv } from './validate.ts';
+import { buildEnv } from '@/content/check.ts';
+import type { Content } from '@/content/schemas.ts';
+import type { ContentEnv } from '@/content/validate.ts';
 
 export function svg(groups: [id: string, material: string][]): string {
   const body = groups

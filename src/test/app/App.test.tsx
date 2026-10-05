@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { App } from './App';
+import { App } from '@/app/App';
 
 function setWindowSize(width: number, height: number) {
   Object.defineProperty(window, 'innerWidth', { configurable: true, value: width });

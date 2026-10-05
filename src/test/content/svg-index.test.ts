@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseSvg } from './svg-index.ts';
+import { parseSvg } from '@/content/svg-index.ts';
 
 const source = `<svg>
 <g id="level-0-universe">

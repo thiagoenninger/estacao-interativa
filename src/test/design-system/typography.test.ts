@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { parseCustomProperties, parseRules } from '../test/css';
-import typographyCss from './tokens/typography.css?raw';
+import { parseCustomProperties, parseRules } from '@/test/css';
+import typographyCss from '@/design-system/tokens/typography.css?raw';
 
 const rules = parseRules(typographyCss);
 
