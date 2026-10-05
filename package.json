@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "validate:data": "node --disable-warning=ExperimentalWarning scripts/validate-content.ts",
     "validate:release": "node --disable-warning=ExperimentalWarning scripts/validate-content.ts --release",
+    "audit:svg": "node --disable-warning=ExperimentalWarning scripts/audit-svg.ts",
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "format": "prettier --write .",
