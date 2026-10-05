@@ -54,6 +54,7 @@ Ferramentas de desenvolvimento, na URL ou no teclado:
 - Fontes, ícones, texturas, objetos e esferas ficam em `assets/`; nenhum recurso é carregado da rede.
 - O conteúdo da experiência fica em `data/` (JSON); nada de texto de objeto ou material no código (ADR 0013).
 - Nomes de arquivos, pastas e ids seguem o glossário do ADR 0014.
+- Os testes ficam todos em `src/test/`, em pastas que espelham `src/`, e importam o código por `@/` (ADR 0015).
 
 ## Documentação
 

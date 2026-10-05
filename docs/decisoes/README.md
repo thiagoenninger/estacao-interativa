@@ -20,6 +20,7 @@ mudar, um novo ADR o substitui.
 | 0012 | Vitrine interna de validação (`?showcase`)                           | aceita |
 | 0013 | Conteúdo em JSON normalizado, validado por Zod e por regras próprias | aceita |
 | 0014 | Nomes em inglês para assets, ids e chaves de dados (glossário)       | aceita |
+| 0015 | Testes concentrados em `src/test/`, com o atalho `@/` nos imports    | aceita |
 
 Para uma nova decisão, copie `0000-modelo.md`, use o próximo número e
 atualize esta tabela.

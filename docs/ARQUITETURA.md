@@ -67,7 +67,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `src/motion/`                   | Espelho em TypeScript dos tokens de movimento                             |
 | `src/dev/showcase/`             | Vitrine de validação, aberta com `?showcase` (ADR 0012)                   |
 | `src/styles/`                   | Estilos globais                                                           |
-| `src/test/`                     | Preparação comum dos testes e utilitários de leitura de CSS               |
+| `src/test/`                     | Todos os testes, em pastas que espelham `src/`, e os auxiliares (`setup.ts`, `css.ts`) |
 
 ## Palco e escala
 
@@ -131,3 +131,14 @@ A validação roda em três lugares: no `npm run build` (um erro impede o build)
 `npm run check` e no navegador (aba Conteúdo da vitrine). Em desenvolvimento, texto
 de rascunho (`[TEXTO — curadoria]`) é aviso; na versão final
 (`npm run validate:release`), é erro.
+
+## Testes (Etapa 04b)
+
+Todos os testes ficam em `src/test/`, em pastas que espelham `src/`: o teste de
+`src/content/validate.ts` é `src/test/content/validate.test.ts`. Os auxiliares
+(`setup.ts`, `css.ts`, `content/test-fixtures.ts`) ficam na mesma pasta. Os testes
+importam o código pelo atalho `@/`, que aponta para `src/` (configurado em
+`vite.config.ts` e `tsconfig.app.json`); o código de produção continua com imports
+relativos, porque o script de validação roda direto no Node. O teste
+`src/test/structure.test.ts` falha se algum teste aparecer fora de `src/test/`
+(ADR 0015).
