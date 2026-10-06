@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { App } from '@/app/App';
 
@@ -112,6 +112,33 @@ describe('App · Showcase', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Automóvel' }), { detail: 0 });
     const carNodes = screen.getAllByTestId('orbit-node');
     expect(carNodes.every((node) => node.getAttribute('data-state') === 'disabled')).toBe(true);
+  });
+
+  it('shows the object drawings on the Objects tab', async () => {
+    render(<App />);
+    await screen.findByTestId('showcase');
+    fireEvent.click(screen.getByRole('tab', { name: 'Objetos' }), { detail: 0 });
+
+    expect(screen.getByTestId('showcase-tab-objects')).toBeTruthy();
+    expect(screen.getByTestId('object-audit').textContent).toContain('0 erros · 0 avisos');
+
+    // The bicycle opens first, selected and with no material.
+    const main = within(screen.getByTestId('object-main'));
+    const bicycle = main.getByRole('img', { name: 'Bicicleta' });
+    expect(bicycle.getAttribute('data-view')).toBe('selected');
+
+    // Copper: the headlight, which lives inside, appears and the frame recedes.
+    fireEvent.click(screen.getByRole('button', { name: 'Cobre' }), { detail: 0 });
+    expect(bicycle.querySelector('[data-group="headlight"]')?.getAttribute('data-visible')).toBe(
+      'true',
+    );
+    expect(bicycle.querySelector('[data-group="frame"]')?.getAttribute('data-state')).toBe(
+      'recede',
+    );
+
+    // Another object starts again with no material.
+    fireEvent.click(screen.getByRole('button', { name: 'Lata' }), { detail: 0 });
+    expect(main.getByRole('img', { name: 'Lata' }).getAttribute('data-material')).toBeNull();
   });
 
   it('counts only the touches that end inside the button', async () => {
