@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "electron/main.ts",
   "engines": {
     "node": "^24.0.0"
   },
@@ -10,6 +11,8 @@
     "dev": "vite",
     "build": "npm run validate:data && tsc -b && vite build",
     "preview": "vite preview",
+    "electron:dev": "node --disable-warning=ExperimentalWarning scripts/electron-dev.ts",
+    "electron:start": "npm run build && electron .",
     "validate:data": "node --disable-warning=ExperimentalWarning scripts/validate-content.ts",
     "validate:release": "node --disable-warning=ExperimentalWarning scripts/validate-content.ts --release",
     "audit:svg": "node --disable-warning=ExperimentalWarning scripts/audit-svg.ts",
@@ -34,6 +37,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.1.1",
+    "electron": "44.5.1",
     "eslint": "10.11.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-react-hooks": "7.1.1",

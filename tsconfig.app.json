@@ -8,7 +8,7 @@
     "skipLibCheck": true,
 
     "moduleResolution": "bundler",
-    "paths": { "@/*": ["./src/*"] },
+    "paths": { "@/*": ["./src/*"], "@electron/*": ["./electron/*"] },
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
