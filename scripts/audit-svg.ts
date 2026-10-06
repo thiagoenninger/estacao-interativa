@@ -11,7 +11,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { summarizeIssues, type Issue } from '../src/content/validate.ts';
-import { auditDrawing, type ObjectPlane } from '../src/objects/audit.ts';
+import { auditDrawing, type ObjectPlane } from '../src/object/audit.ts';
 
 const root = join(import.meta.dirname, '..');
 const release = process.argv.includes('--release');
