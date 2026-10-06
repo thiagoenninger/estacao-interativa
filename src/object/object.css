@@ -1,0 +1,68 @@
+/* Foundations 07 · Objetos em line art. The drawing files only describe shapes and groups;
+   stroke, color and state come from here. The numbers live in drawing-measures.ts too, and a
+   test keeps the two identical. */
+.object-drawing {
+  --object-stroke-universe: 2.6px;
+  --object-stroke-selected: 3.2px;
+  --object-stroke-thumbnail: 2.2px;
+  --object-stroke-fine-ratio: 0.62;
+  --object-stroke-highlight-ratio: 1.35;
+  --object-stroke: var(--object-stroke-universe);
+
+  display: block;
+  flex: none;
+  overflow: visible;
+  color: var(--color-text-primary);
+}
+
+.object-drawing[data-view='selected'] {
+  --object-stroke: var(--object-stroke-selected);
+}
+
+.object-drawing[data-view='thumbnail'] {
+  --object-stroke: var(--object-stroke-thumbnail);
+}
+
+/* The stroke is measured on the screen, whatever the scale of the drawing. */
+.object-drawing * {
+  vector-effect: non-scaling-stroke;
+}
+
+.object-drawing [data-visible='false'] {
+  display: none;
+}
+
+/* Each group states its kind of stroke in data-stroke. */
+.object-drawing [data-stroke] {
+  stroke-width: calc(var(--object-stroke) * var(--stroke-weight, 1) * var(--stroke-boost, 1));
+}
+
+.object-drawing [data-stroke='fine'] {
+  --stroke-weight: var(--object-stroke-fine-ratio);
+}
+
+.object-drawing [data-stroke='dashed'] {
+  --stroke-weight: var(--object-stroke-fine-ratio);
+  stroke-dasharray: 7 6;
+}
+
+.object-drawing [data-stroke='filled'] {
+  --stroke-weight: var(--object-stroke-fine-ratio);
+  fill: currentColor;
+}
+
+/* The material selected: the stroke gets thicker and takes the active color. Never only the color. */
+.object-drawing [data-state='highlight'] {
+  --stroke-boost: var(--object-stroke-highlight-ratio);
+  stroke: var(--color-state-active);
+}
+
+.object-drawing [data-state='highlight'][data-stroke='filled'] {
+  fill: var(--color-state-active);
+}
+
+/* The other groups recede, group by group, with no image mask. */
+.object-drawing [data-state='recede'] {
+  stroke-opacity: var(--opacity-object-recede);
+  fill-opacity: var(--opacity-object-recede);
+}

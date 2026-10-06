@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { loadContent } from '@/content';
-import { getDrawing, getObjectSource, listDrawingFiles } from '@/objects/object-source';
+import { getDrawing, getObjectSource, listDrawingFiles } from '@/object/object-source';
 
 describe('object drawings', () => {
   it('has exactly the files the content points to', () => {

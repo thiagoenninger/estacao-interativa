@@ -5,7 +5,7 @@ import {
   SvgSyntaxError,
   walkElements,
   type SvgElement,
-} from '@/objects/svg-tree.ts';
+} from '@/object/svg-tree.ts';
 
 const source = `<?xml version="1.0"?>
 <!-- a comment <g id="not-an-element"> -->

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { loadContent } from '@/content';
-import { auditDrawing, type AuditOptions } from '@/objects/audit.ts';
-import { getObjectSource, listDrawingFiles } from '@/objects/object-source';
+import { auditDrawing, type AuditOptions } from '@/object/audit.ts';
+import { getObjectSource, listDrawingFiles } from '@/object/object-source';
 
 const VALID = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
 <g id="level-0-universe"><g id="body" data-material="aluminium" data-stroke="line"><circle cx="100" cy="100" r="50"/></g></g>
