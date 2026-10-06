@@ -264,3 +264,37 @@
 .orbit-chip[data-state='disabled'] {
   opacity: var(--opacity-disabled);
 }
+
+.objects-tab {
+  display: grid;
+  grid-template-columns: 560px 640px 1fr;
+  gap: var(--space-6);
+}
+
+.objects-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.objects-column .showcase-row {
+  gap: var(--space-3);
+}
+
+.objects-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-5);
+}
+
+.objects-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 640px;
+  height: 480px;
+  border: 1px solid var(--color-divider);
+  background: var(--color-surface);
+}

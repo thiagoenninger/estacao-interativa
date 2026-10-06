@@ -45,7 +45,7 @@ Modelo normalizado: Elemento, Material, FonteMineral, RotaDeObtenção, Objeto, 
 
 Instalador publicado no Github Releases. Atualização remota prevista para a Etapa 24.
 
-## Estrutura atual do código (Etapa 04)
+## Estrutura atual do código (Etapa 05)
 
 | Pasta                           | Conteúdo                                                                  |
 | ------------------------------- | ------------------------------------------------------------------------- |
@@ -55,7 +55,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `assets/objects/`               | Os 8 desenhos de objetos (SVG, `object-*.svg`)                            |
 | `assets/materials/`             | As 7 esferas de material (PNG, `material-*-sphere.png`)                   |
 | `data/`                         | O conteúdo da experiência em JSON normalizado (ADR 0013)                  |
-| `scripts/`                      | `validate-content.ts`: valida `data/` contra `assets/` antes do build     |
+| `scripts/`                      | `validate-content.ts` valida `data/`; `audit-svg.ts` audita os desenhos de objetos |
 | `src/app/`                      | Inicialização da aplicação (`App.tsx`)                                    |
 | `src/app/stage/`                | Palco 1920 × 1080 (`Stage`), cálculo de escala e grade de depuração       |
 | `src/content/`                  | Esquemas (Zod), validador, consultas e carregamento do conteúdo           |
@@ -65,6 +65,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `src/design-system/buttons/`    | `Button`, `IconButton`, `BackButton`, `HomeButton` e a regra de toque     |
 | `src/design-system/background/` | `Background`: retícula e marcas de registro                               |
 | `src/motion/`                   | Espelho em TypeScript dos tokens de movimento                             |
+| `src/object/`                   | `ObjectDrawing`, leitor de SVG, auditoria dos desenhos e regras de estado |
 | `src/dev/showcase/`             | Vitrine de validação, aberta com `?showcase` (ADR 0012)                   |
 | `src/styles/`                   | Estilos globais                                                           |
 | `src/test/`                     | Todos os testes, em pastas que espelham `src/`, e os auxiliares (`setup.ts`, `css.ts`) |
@@ -142,3 +143,24 @@ importam o código pelo atalho `@/`, que aponta para `src/` (configurado em
 relativos, porque o script de validação roda direto no Node. O teste
 `src/test/structure.test.ts` falha se algum teste aparecer fora de `src/test/`
 (ADR 0015).
+
+## Desenhos dos objetos (Etapa 05)
+
+Cada objeto é um SVG em `assets/objects/` com três níveis de detalhe no mesmo arquivo
+(`level-0-universe`, `level-1-structure`, `level-2-internal`). O arquivo só descreve
+formas e grupos: cada grupo de componente declara `id`, `data-material` e `data-stroke`
+(`line`, `fine`, `dashed` ou `filled`). Espessura, tracejado, cor e estado vêm do
+aplicativo, por CSS (ADR 0016).
+
+`src/object/` tem quatro partes:
+
+1. **Leitura** (`svg-tree.ts`, `object-source.ts`): um leitor de SVG sem biblioteca, usado
+   pelo componente e pela auditoria, e a leitura dos arquivos pelo Vite.
+2. **Regras de estado** (`drawing-state.ts`, `drawing-measures.ts`): quais níveis e grupos
+   aparecem em cada visão (`universe`, `selected`, `thumbnail`), quais grupos são
+   destacados ou recuam, e as medidas do Design System.
+3. **Componente** (`ObjectDrawing.tsx`, `object.css`): desenha o objeto em React, grupo por
+   grupo, com `data-group` (o `id` do arquivo), `data-visible` e `data-state`. O nome
+   acessível vem do conteúdo (`label`). Ainda não há animação.
+4. **Auditoria** (`audit.ts`, mais `scripts/audit-svg.ts`): confere os desenhos contra as
+   regras da Foundations 07. Roda com `npm run audit:svg` e não faz parte do `npm run check`.
