@@ -1,4 +1,4 @@
-import { STAGE } from '../src/design-system/measures';
+import { STAGE } from '../src/design-system/measures.ts';
 
 const MIN_ZOOM = 0.25;
 const MAX_ZOOM = 5;
