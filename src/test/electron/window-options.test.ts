@@ -39,12 +39,12 @@ describe('buildWindowOptions · security baseline', () => {
 });
 
 describe('buildWindowOptions · window', () => {
-  it('is full screen, without frame and fixed in kiosk mode', () => {
+  it('is full screen and without frame in kiosk mode, and stays resizable so Windows sizes it right', () => {
     expect(buildWindowOptions(kiosk, PRELOAD)).toMatchObject({
       fullscreen: true,
       kiosk: true,
       frame: false,
-      resizable: false,
+      resizable: true,
       show: false,
     });
   });

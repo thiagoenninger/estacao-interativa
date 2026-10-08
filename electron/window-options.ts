@@ -19,7 +19,8 @@ export function buildWindowOptions(launch: LaunchOptions, preloadPath: string) {
     fullscreen: launch.kiosk,
     kiosk: launch.kiosk,
     frame: !launch.kiosk,
-    resizable: !launch.kiosk,
+    // Always resizable, on purpose. In full screen nobody can resize the window anyway, but on Windows a frameless window that is not resizable stays smaller than the screen (measured: 1294 × 727 on a 1920 × 1080 screen, on a PC with two screens of different scales).
+    resizable: true,
     webPreferences: {
       preload: preloadPath,
       contextIsolation: true,
