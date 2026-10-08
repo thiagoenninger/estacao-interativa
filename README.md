@@ -4,7 +4,7 @@ Experiência interativa para instalação permanente da Casa de Metal: telas
 touchscreen em modo quiosque onde visitantes investigam objetos cotidianos e
 descobrem os metais e minerais que os compõem.
 
-> **Status:** em desenvolvimento — Etapa 05 de 25.
+> **Status:** em desenvolvimento — Etapa 06 de 25.
 
 ## Escopo
 
@@ -17,7 +17,8 @@ aparecem como opção de exploração.
 - React 19 + TypeScript 6 + Vite 8
 - Vitest (testes) · ESLint + Prettier (qualidade de código)
 - Zod (validação dos dados)
-- Previsto: Zustand (estado) · GSAP (motion) · Electron (quiosque)
+- Electron 44 (casca desktop, modo quiosque)
+- Previsto: Zustand (estado) · GSAP (motion)
 
 ## Requisitos
 
@@ -34,13 +35,15 @@ npm run dev          # servidor de desenvolvimento em http://localhost:5173
 Ferramentas de desenvolvimento, na URL ou no teclado:
 
 - Grade de depuração: `http://localhost:5173/?grid` ou a tecla G.
-- - Vitrine do Design System, do conteúdo e dos objetos (cores, tipografia, ícones, botões, dados, desenhos): `http://localhost:5173/?showcase`..
+- Vitrine do Design System, do conteúdo, dos objetos e da plataforma (cores, tipografia, ícones, botões, dados, desenhos, casca Electron): `http://localhost:5173/?showcase`.
 
 | Comando                    | O que faz                                                          |
 | -------------------------- | ------------------------------------------------------------------ |
 | `npm run dev`              | Servidor de desenvolvimento                                        |
 | `npm run build`            | Valida os dados, confere os tipos e gera a versão de produção      |
 | `npm run preview`          | Serve a versão de produção gerada                                  |
+| `npm run electron:dev`     | Abre o aplicativo desktop sobre o servidor de desenvolvimento      |
+| `npm run electron:start`   | Gera a versão de produção e abre o aplicativo em tela cheia        |
 | `npm run check`            | Tipos, lint, formatação, dados e testes (tudo junto)               |
 | `npm run validate:data`    | Valida `data/` contra `assets/` (rascunhos viram avisos)           |
 | `npm run validate:release` | Mesma validação, mas rascunhos e lacunas viram erro (versão final) |
@@ -57,6 +60,7 @@ Ferramentas de desenvolvimento, na URL ou no teclado:
 - Nomes de arquivos, pastas e ids seguem o glossário do ADR 0014.
 - Os testes ficam todos em `src/test/`, em pastas que espelham `src/`, e importam o código por `@/` (ADR 0015).
 - Os desenhos dos objetos só descrevem formas e grupos; traço, cor e estado vêm do aplicativo (ADR 0016).
+- A casca Electron (`electron/`) é fina: a lógica que dá para testar fica em módulos puros; a página nunca acessa o Node.js (ADR 0017).
 
 ## Documentação
 

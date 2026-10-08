@@ -45,7 +45,7 @@ Modelo normalizado: Elemento, Material, FonteMineral, RotaDeObtenção, Objeto, 
 
 Instalador publicado no Github Releases. Atualização remota prevista para a Etapa 24.
 
-## Estrutura atual do código (Etapa 05)
+## Estrutura atual do código (Etapa 06)
 
 | Pasta                           | Conteúdo                                                                  |
 | ------------------------------- | ------------------------------------------------------------------------- |
@@ -55,7 +55,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `assets/objects/`               | Os 8 desenhos de objetos (SVG, `object-*.svg`)                            |
 | `assets/materials/`             | As 7 esferas de material (PNG, `material-*-sphere.png`)                   |
 | `data/`                         | O conteúdo da experiência em JSON normalizado (ADR 0013)                  |
-| `scripts/`                      | `validate-content.ts` valida `data/`; `audit-svg.ts` audita os desenhos de objetos |
+| `scripts/`                      | `validate-content.ts` valida `data/`; `audit-svg.ts` audita os desenhos; `electron-dev.ts` abre o app desktop em desenvolvimento |
 | `src/app/`                      | Inicialização da aplicação (`App.tsx`)                                    |
 | `src/app/stage/`                | Palco 1920 × 1080 (`Stage`), cálculo de escala e grade de depuração       |
 | `src/content/`                  | Esquemas (Zod), validador, consultas e carregamento do conteúdo           |
@@ -66,6 +66,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `src/design-system/background/` | `Background`: retícula e marcas de registro                               |
 | `src/motion/`                   | Espelho em TypeScript dos tokens de movimento                             |
 | `src/object/`                   | `ObjectDrawing`, leitor de SVG, auditoria dos desenhos e regras de estado |
+| `src/platform/`                 | O que a casca Electron conta à página (`StationInfo`) e `getStation()`    |
 | `src/dev/showcase/`             | Vitrine de validação, aberta com `?showcase` (ADR 0012)                   |
 | `src/styles/`                   | Estilos globais                                                           |
 | `src/test/`                     | Todos os testes, em pastas que espelham `src/`, e os auxiliares (`setup.ts`, `css.ts`) |
@@ -76,8 +77,7 @@ Todo o desenho vive dentro do Palco (`Stage` no código), uma área fixa de
 1920 × 1080 px lógicos. A função pura `calculateScale` encaixa o Palco na janela
 mantendo 16:9: o menor dos dois fatores (largura e altura) vence e a sobra vira
 faixa centralizada. No navegador de desenvolvimento a escala é aplicada por
-`transform`; na casca Electron (Etapa 06) será aplicada por zoom da janela.
-As medidas do Design System ficam num só arquivo, `measures.ts`, com testes.
+`transform`; na casca Electron (Etapa 06), em modo quiosque, é aplicada por zoom da janela (veja "Casca Electron (Etapa 06)", no fim deste documento).
 
 ## Qualidade de código
 
@@ -164,3 +164,60 @@ aplicativo, por CSS (ADR 0016).
    acessível vem do conteúdo (`label`). Ainda não há animação.
 4. **Auditoria** (`audit.ts`, mais `scripts/audit-svg.ts`): confere os desenhos contra as
    regras da Foundations 07. Roda com `npm run audit:svg` e não faz parte do `npm run check`.
+
+## Casca Electron (Etapa 06)
+
+A casca é a camada Plataforma: abre a janela, escolhe o modo (quiosque ou janela comum),
+ajusta o zoom à tela e protege a página. Ela é fina de propósito: `electron/main.ts` só
+liga as peças, e tudo o que dá para testar fica em módulos puros, sem importar `electron`
+nem `node:*`, para rodarem no Vitest e na conferência de tipos do aplicativo.
+
+| Arquivo                      | Papel                                                                        |
+| ---------------------------- | ---------------------------------------------------------------------------- |
+| `electron/main.ts`           | Cola: janela, protocolo `app://`, guardas de segurança, instância única      |
+| `electron/launch-options.ts` | Lê a linha de comando e o ambiente: modo, quiosque, DevTools e ferramentas   |
+| `electron/zoom.ts`           | Regra do zoom que faz o Palco de 1920 × 1080 caber na tela                   |
+| `electron/security.ts`       | Origem permitida, política de segurança de conteúdo e caminhos aceitos       |
+| `electron/window-options.ts` | Opções da janela e da página, como dados                                     |
+| `electron/preload.cjs`       | A única ponte entre a página e a casca (CommonJS puro, exigido pelo sandbox) |
+| `src/platform/`              | O que a página sabe da casca: `StationInfo` e `getStation()`                 |
+| `scripts/electron-dev.ts`    | `npm run electron:dev`: servidor Vite + janela, e fecha os dois juntos       |
+
+**Dois modos.** Em desenvolvimento (`npm run electron:dev`), a janela carrega o servidor do
+Vite; só vale se `ELECTRON_RENDERER_URL` apontar para esta máquina (`localhost`, `127.0.0.1`
+ou `[::1]`) e o aplicativo não estiver instalado. Em produção (`npm run electron:start`), a
+janela carrega `dist/` pelo protocolo próprio `app://station/`, sem servidor e sem `file://`.
+
+**Linha de comando** (depois de `--` nos scripts do npm):
+
+| Opção        | Efeito                                                            | Instalado |
+| ------------ | ----------------------------------------------------------------- | --------- |
+| `--windowed` | Janela comum 1280 × 720, com moldura e cursor, em vez do quiosque | vale      |
+| `--devtools` | Permite F12 e Ctrl+Shift+I em produção                            | ignorada  |
+| `--showcase` | Abre a página com `?showcase` (não há barra de endereço)          | ignorada  |
+| `--grid`     | Abre a página com `?grid`                                         | ignorada  |
+| `--cursor`   | Mantém o cursor visível no quiosque, para testar sem tela de toque | ignorada  |
+
+**Quiosque.** Tela cheia, sem moldura, sem menu e sem cursor (CSS inserido depois do
+carregamento; `--cursor` o mantém visível, só em desenvolvimento). Alt+F4 fecha; o atalho de manutenção é da Etapa 21. Só há uma janela e uma
+instância: abrir o aplicativo de novo traz a primeira janela para a frente.
+
+**Zoom.** `computeZoomFactor` devolve `min(largura / 1920, altura / 1080)` da tela, em
+pixels lógicos do Windows, limitado a 0,25 a 5. Em quiosque, a casca aplica esse fator
+(Full HD: 1; 4K a 100%: 2; 4K a 150%, que o Windows vê como 2560 × 1440: 1,333), e a página
+fica sempre com 1920 × 1080 px CSS, com a escala do Palco em 1. Numa tela que não é 16:9,
+vence o menor fator e o Palco sobra em faixas. Em janela comum o zoom fica em 1 e o Palco se
+escala sozinho, como no navegador. O fator é reaplicado quando a página carrega, quando a
+janela entra em tela cheia e quando a tela muda (`display-metrics-changed`).
+
+**Segurança** (ADR 0017). A página roda no sandbox do Chromium, com isolamento de contexto
+e sem Node.js (`sandbox`, `contextIsolation`, `nodeIntegration: false`, `webviewTag: false`).
+A única ponte é `window.station.getInfo()`, somente leitura, e a casca só responde à página
+da própria origem. Em produção, uma política de segurança de conteúdo só deixa carregar o
+que vem de `app://station`. Janelas novas e navegação para outra origem são recusadas, as
+permissões do sistema (câmera, microfone, localização…) são todas negadas, e o DevTools só
+existe em desenvolvimento ou com `--devtools`.
+
+**Ainda não existe** (etapas seguintes): preparação do Windows para quiosque, início
+automático, recuperação de falhas e atalho de manutenção (Etapa 21); empacotamento e
+instalador (Etapa 22); atualização (Etapa 24); log em arquivo (a definir).

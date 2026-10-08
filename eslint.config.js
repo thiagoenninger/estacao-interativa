@@ -18,8 +18,14 @@ export default tseslint.config(
     },
   },
   {
-    files: ['scripts/**/*.ts'],
+    files: ['scripts/**/*.ts', 'electron/**/*.ts'],
     languageOptions: { globals: globals.node },
+  },
+  {
+    // The preload script runs in the Chromium sandbox as plain CommonJS.
+    files: ['electron/**/*.cjs'],
+    extends: [js.configs.recommended],
+    languageOptions: { sourceType: 'commonjs', globals: globals.node },
   },
   prettier,
 );

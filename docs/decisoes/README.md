@@ -22,6 +22,7 @@ mudar, um novo ADR o substitui.
 | 0014 | Nomes em inglês para assets, ids e chaves de dados (glossário)               | aceita |
 | 0015 | Testes concentrados em `src/test/`, com o atalho `@/` nos imports            | aceita |
 | 0016 | Desenhos dos objetos: o arquivo descreve formas, o aplicativo decide o resto | aceita |
+| 0017 | Casca Electron: TypeScript direto, `app://`, zoom exato e página isolada     | aceita |
 
 Para uma nova decisão, copie `0000-modelo.md`, use o próximo número e
 atualize esta tabela.

@@ -141,6 +141,15 @@ describe('App · Showcase', () => {
     expect(main.getByRole('img', { name: 'Lata' }).getAttribute('data-material')).toBeNull();
   });
 
+  it('shows the platform on the Platform tab', async () => {
+    render(<App />);
+    await screen.findByTestId('showcase');
+    fireEvent.click(screen.getByRole('tab', { name: 'Plataforma' }), { detail: 0 });
+
+    expect(screen.getByTestId('showcase-tab-platform')).toBeTruthy();
+    expect(screen.getByTestId('platform-fact-shell').textContent).toContain('Navegador comum');
+  });
+
   it('counts only the touches that end inside the button', async () => {
     render(<App />);
     await screen.findByTestId('showcase');
