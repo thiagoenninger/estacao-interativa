@@ -6,6 +6,7 @@ import { ColorsTab } from './ColorsTab';
 import { ContentTab } from './ContentTab';
 import { IconsTab } from './IconsTab';
 import { ObjectsTab } from './ObjectsTab';
+import { PlatformTab } from './PlatformTab';
 import { SpaceShapeTab } from './SpaceShapeTab';
 import { TypographyTab } from './TypographyTab';
 import './showcase.css';
@@ -19,6 +20,7 @@ const TABS = [
   ['buttons', 'Botões', ButtonsTab],
   ['content', 'Conteúdo', ContentTab],
   ['objects', 'Objetos', ObjectsTab],
+  ['platform', 'Plataforma', PlatformTab],
 ] as const;
 
 type TabId = (typeof TABS)[number][0];
