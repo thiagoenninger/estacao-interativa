@@ -41,7 +41,7 @@ export function PlatformTab() {
   const stageScale = calculateScale(width, height).factor;
 
   const facts: [string, string, string][] = [
-    ['shell', 'Casa', station ? 'Electron' : 'Navegador comum (sem a casca Electron)'],
+    ['shell', 'Casca', station ? 'Electron' : 'Navegador comum (sem a casca Electron)'],
   ];
   if (info) {
     facts.push(
