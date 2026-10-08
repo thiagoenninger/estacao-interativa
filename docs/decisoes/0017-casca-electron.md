@@ -45,8 +45,8 @@ pode alcançar do sistema.
   liga. Um teste lê o texto de `main.ts` e `preload.cjs` e falha se alguma proteção
   sumir.
 - **Variáveis e opções com limite.** `ELECTRON_RENDERER_URL` só vale em máquina de
-  desenvolvimento (`localhost`) e fora do aplicativo instalado; `--devtools`, `--showcase`
-  e `--grid` também.
+  desenvolvimento (`localhost`) e fora do aplicativo instalado; `--devtools`, `--showcase`,
+  `--grid` e `--cursor` (cursor visível no quiosque, para testar sem tela de toque) também.
 
 ## Alternativas consideradas
 

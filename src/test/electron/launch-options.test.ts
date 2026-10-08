@@ -9,6 +9,7 @@ describe('parseLaunchOptions', () => {
       mode: 'production',
       rendererUrl: null,
       kiosk: true,
+      hideCursor: true,
       devTools: false,
       query: '',
     });
@@ -21,6 +22,7 @@ describe('parseLaunchOptions', () => {
       mode: 'development',
       rendererUrl: 'http://localhost:5173',
       kiosk: false,
+      hideCursor: false,
       devTools: true,
       query: '',
     });
@@ -51,6 +53,25 @@ describe('parseLaunchOptions', () => {
     expect(options).toMatchObject({ mode: 'production', kiosk: false, devTools: false });
   });
 
+  it('hides the cursor in kiosk mode, unless --cursor asks to keep it', () => {
+    expect(parseLaunchOptions([], {}, false).hideCursor).toBe(true);
+    expect(parseLaunchOptions(['--cursor'], {}, false)).toMatchObject({
+      kiosk: true,
+      hideCursor: false,
+    });
+  });
+
+  it('has no cursor to hide in an ordinary window', () => {
+    expect(parseLaunchOptions(['--windowed'], {}, false).hideCursor).toBe(false);
+    expect(parseLaunchOptions([], { ELECTRON_RENDERER_URL: DEV_URL }, false).hideCursor).toBe(
+      false,
+    );
+  });
+
+  it('an installed app always hides the cursor, even with --cursor', () => {
+    expect(parseLaunchOptions(['--cursor'], {}, true).hideCursor).toBe(true);
+  });
+
   it('allows the DevTools in production only with --devtools', () => {
     expect(parseLaunchOptions(['--devtools'], {}, false).devTools).toBe(true);
     expect(parseLaunchOptions([], {}, false).devTools).toBe(false);
@@ -67,6 +88,7 @@ describe('parseLaunchOptions', () => {
       mode: 'production',
       rendererUrl: null,
       kiosk: true,
+      hideCursor: true,
       devTools: false,
       query: '',
     });

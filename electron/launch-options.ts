@@ -3,6 +3,8 @@ export interface LaunchOptions {
   mode: 'development' | 'production';
   rendererUrl: string | null;
   kiosk: boolean;
+  /** Whether the cursor is hidden. Always in kiosk mode, unless `--cursor` asks for it. */
+  hideCursor: boolean;
   devTools: boolean;
   query: string;
 }
@@ -30,10 +32,12 @@ export function parseLaunchOptions(
   const mode = rendererUrl ? 'development' : 'production';
   const windowed = argv.includes('--windowed');
   const tools = isPackaged ? [] : TOOL_FLAGS.filter((name) => argv.includes(`--${name}`));
+  const kiosk = mode === 'production' && !windowed;
   return {
     mode,
     rendererUrl,
-    kiosk: mode === 'production' && !windowed,
+    kiosk,
+    hideCursor: kiosk && (isPackaged || !argv.includes('--cursor')),
     devTools: mode === 'development' || (!isPackaged && argv.includes('--devtools')),
     query: tools.length > 0 ? `?${tools.join('&')}` : '',
   };

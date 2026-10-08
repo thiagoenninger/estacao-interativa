@@ -64,7 +64,7 @@ function createWindow() {
   win.once('ready-to-show', () => win.show());
   win.webContents.on('did-finish-load', () => {
     applyZoom(win);
-    if (launch.kiosk) void win.webContents.insertCSS(HIDE_CURSOR_CSS);
+    if (launch.hideCursor) void win.webContents.insertCSS(HIDE_CURSOR_CSS);
   });
   win.on('enter-full-screen', () => applyZoom(win));
 
@@ -96,6 +96,7 @@ function registerStationInfo() {
     return {
       mode: launch.mode,
       kiosk: launch.kiosk,
+      cursorHidden: launch.hideCursor,
       versions: {
         electron: process.versions.electron,
         chrome: process.versions.chrome,

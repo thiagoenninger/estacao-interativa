@@ -14,6 +14,7 @@ const fact = (id: string) => screen.getByTestId(`platform-fact-${id}`).textConte
 const FOUR_K_AT_150: StationInfo = {
   mode: 'production',
   kiosk: true,
+  cursorHidden: true,
   versions: { electron: '44.5.1', chrome: '152.0.7977.130', node: '24.21.0' },
   zoomFactor: 4 / 3,
   display: { width: 2560, height: 1440, scaleFactor: 1.5 },
@@ -45,6 +46,7 @@ describe('PlatformTab', () => {
     expect(fact('versions')).toBe('Electron 44.5.1 · Chromium 152.0.7977.130 · Node 24.21.0');
     expect(fact('mode')).toBe('produção');
     expect(fact('kiosk')).toContain('sim');
+    expect(fact('cursor')).toBe('escondido');
     expect(fact('display')).toBe('2560 × 1440');
     expect(fact('windows-scale')).toBe('150%');
     expect(fact('zoom')).toBe('1,333');
@@ -56,12 +58,19 @@ describe('PlatformTab', () => {
 
   it('shows the development mode and an ordinary window', async () => {
     window.station = {
-      getInfo: () => Promise.resolve({ ...FOUR_K_AT_150, mode: 'development', kiosk: false }),
+      getInfo: () =>
+        Promise.resolve({
+          ...FOUR_K_AT_150,
+          mode: 'development',
+          kiosk: false,
+          cursorHidden: false,
+        }),
     };
     render(<PlatformTab />);
     await screen.findByTestId('platform-fact-mode');
     expect(fact('mode')).toBe('desenvolvimento');
     expect(fact('kiosk')).toContain('não');
+    expect(fact('cursor')).toBe('visível');
   });
 
   it('asks the shell again when the window changes size', async () => {

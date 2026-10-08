@@ -196,9 +196,10 @@ janela carrega `dist/` pelo protocolo próprio `app://station/`, sem servidor e 
 | `--devtools` | Permite F12 e Ctrl+Shift+I em produção                            | ignorada  |
 | `--showcase` | Abre a página com `?showcase` (não há barra de endereço)          | ignorada  |
 | `--grid`     | Abre a página com `?grid`                                         | ignorada  |
+| `--cursor`   | Mantém o cursor visível no quiosque, para testar sem tela de toque | ignorada  |
 
 **Quiosque.** Tela cheia, sem moldura, sem menu e sem cursor (CSS inserido depois do
-carregamento). Alt+F4 fecha; o atalho de manutenção é da Etapa 21. Só há uma janela e uma
+carregamento; `--cursor` o mantém visível, só em desenvolvimento). Alt+F4 fecha; o atalho de manutenção é da Etapa 21. Só há uma janela e uma
 instância: abrir o aplicativo de novo traz a primeira janela para a frente.
 
 **Zoom.** `computeZoomFactor` devolve `min(largura / 1920, altura / 1080)` da tela, em

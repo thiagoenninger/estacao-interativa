@@ -3,6 +3,8 @@ export interface StationInfo {
   mode: 'development' | 'production';
   /* True when the app runs full screen, without frame or cursor */
   kiosk: boolean;
+  /* True when the cursor is hidden (kiosk mode without --cursor) */
+  cursorHidden: boolean;
   versions: { electron: string; chrome: string; node: string };
   zoomFactor: number;
   display: { width: number; height: number; scaleFactor: number };
