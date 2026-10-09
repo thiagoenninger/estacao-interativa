@@ -4,7 +4,7 @@ Experiência interativa para instalação permanente da Casa de Metal: telas
 touchscreen em modo quiosque onde visitantes investigam objetos cotidianos e
 descobrem os metais e minerais que os compõem.
 
-> **Status:** em desenvolvimento — Etapa 06 de 25.
+> **Status:** em desenvolvimento — Etapa 07a de 25.
 
 ## Escopo
 
@@ -35,7 +35,7 @@ npm run dev          # servidor de desenvolvimento em http://localhost:5173
 Ferramentas de desenvolvimento, na URL ou no teclado:
 
 - Grade de depuração: `http://localhost:5173/?grid` ou a tecla G.
-- Vitrine do Design System, do conteúdo, dos objetos e da plataforma (cores, tipografia, ícones, botões, dados, desenhos, casca Electron): `http://localhost:5173/?showcase`.
+- Vitrine do Design System, do conteúdo, dos objetos, da plataforma e do desempenho (cores, tipografia, ícones, botões, dados, desenhos, casca Electron, teste de desempenho): `http://localhost:5173/?showcase`.
 
 | Comando                    | O que faz                                                          |
 | -------------------------- | ------------------------------------------------------------------ |
@@ -51,6 +51,16 @@ Ferramentas de desenvolvimento, na URL ou no teclado:
 | `npm run format`           | Formata o código com o Prettier                                    |
 | `npm run test:watch`       | Testes em modo contínuo                                            |
 
+## Teste de desempenho
+
+A aba **Desempenho** da vitrine mede os quadros por segundo das animações mais pesadas do projeto (espera, traço, recuo, anel e a seleção de material completa), registra os toques e a precisão dos alvos e gera um relatório para copiar. Rode no computador e na tela em que o aplicativo vai ficar:
+
+```powershell
+npm run electron:start -- --windowed --showcase
+```
+
+Maximize a janela na tela que quer medir, abra a aba **Desempenho**, escolha o tamanho (diagonal) dessa tela e toque em **Medir todas**. Cada cena dura 10 s mais 1,5 s de aquecimento: não mexa no computador enquanto mede. Os critérios e o que o teste não faz estão no ADR 0018.
+
 ## Convenções
 
 - Código (nomes de arquivos, pastas, variáveis, componentes, comentários e commits) em inglês.
@@ -61,6 +71,7 @@ Ferramentas de desenvolvimento, na URL ou no teclado:
 - Os testes ficam todos em `src/test/`, em pastas que espelham `src/`, e importam o código por `@/` (ADR 0015).
 - Os desenhos dos objetos só descrevem formas e grupos; traço, cor e estado vêm do aplicativo (ADR 0016).
 - A casca Electron (`electron/`) é fina: a lógica que dá para testar fica em módulos puros; a página nunca acessa o Node.js (ADR 0017).
+- O teste de desempenho (`src/dev/spike/`) é uma ferramenta de desenvolvimento: mede cenas fixas, com limites fixos, e a decisão sobre o resultado é tomada no hardware real (ADR 0018).
 
 ## Documentação
 

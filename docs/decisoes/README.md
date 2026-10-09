@@ -23,6 +23,7 @@ mudar, um novo ADR o substitui.
 | 0015 | Testes concentrados em `src/test/`, com o atalho `@/` nos imports            | aceita |
 | 0016 | Desenhos dos objetos: o arquivo descreve formas, o aplicativo decide o resto | aceita |
 | 0017 | Casca Electron: TypeScript direto, `app://`, zoom exato e página isolada     | aceita |
+| 0018 | Teste de desempenho: kit no aplicativo, limites fixos e decisão no hardware  | aceita |
 
 Para uma nova decisão, copie `0000-modelo.md`, use o próximo número e
 atualize esta tabela.
