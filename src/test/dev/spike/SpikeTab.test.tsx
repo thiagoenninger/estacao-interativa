@@ -271,13 +271,48 @@ describe('SpikeTab', () => {
       expect(report()).toContain('- Tela: 3840 × 2160 px do Windows · escala 100%');
     });
 
-    it('copies the text to the clipboard', () => {
+    it('copies the text to the clipboard', async () => {
       const writeText = vi.fn(() => Promise.resolve());
       Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
       render(<SpikeTab />);
       press(screen.getByRole('button', { name: 'Gerar relatório' }));
       press(screen.getByRole('button', { name: 'Copiar' }));
       expect(writeText).toHaveBeenCalledWith(report());
+      await act(async () => {
+        await Promise.resolve();
+      });
+      expect(text('spike-copy-status')).toBe('Relatório copiado.');
+    });
+
+    it('copies by selecting the text when the clipboard is not allowed (the Electron shell)', async () => {
+      const writeText = vi.fn(() => Promise.reject(new DOMException('denied', 'NotAllowedError')));
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
+      const execCommand = vi.fn(() => true);
+      Object.defineProperty(document, 'execCommand', { configurable: true, value: execCommand });
+      render(<SpikeTab />);
+      press(screen.getByRole('button', { name: 'Gerar relatório' }));
+      press(screen.getByRole('button', { name: 'Copiar' }));
+      await act(async () => {
+        await Promise.resolve();
+      });
+      expect(execCommand).toHaveBeenCalledWith('copy');
+      expect(document.activeElement).toBe(screen.getByTestId('spike-report'));
+      expect(text('spike-copy-status')).toBe('Relatório copiado.');
+    });
+
+    it('says how to copy by hand when nothing works, and forgets it with a new report', async () => {
+      const writeText = vi.fn(() => Promise.reject(new DOMException('denied', 'NotAllowedError')));
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
+      Object.defineProperty(document, 'execCommand', { configurable: true, value: () => false });
+      render(<SpikeTab />);
+      press(screen.getByRole('button', { name: 'Gerar relatório' }));
+      press(screen.getByRole('button', { name: 'Copiar' }));
+      await act(async () => {
+        await Promise.resolve();
+      });
+      expect(text('spike-copy-status')).toContain('Ctrl+A');
+      press(screen.getByRole('button', { name: 'Gerar relatório' }));
+      expect(text('spike-copy-status')).toBe('');
     });
   });
 });

@@ -1,3 +1,7 @@
+/* Performance test (Stage 07a). The stage of the test is the whole 1920 × 1080 Stage, drawn above
+   the showcase. It is fixed on purpose: the Stage is transformed, so "fixed" here means "fill
+   the Stage". Every effect (data-fx) has its own block below; data-phase "a" is the state before
+   and "b" the state after, and the stage flips between them back and forth. */
 .spike {
   position: fixed;
   inset: 0;
@@ -277,8 +281,9 @@
 .spike-tab {
   display: grid;
   grid-template-columns: 700px 540px 1fr;
+  grid-template-rows: minmax(0, 1fr);
   gap: var(--space-6);
-  align-items: start;
+  height: 100%;
 }
 
 .spike-column {
@@ -287,6 +292,7 @@
   gap: var(--space-4);
   align-items: flex-start;
   min-width: 0;
+  min-height: 0;
 }
 
 .spike-table {
@@ -351,6 +357,10 @@
   gap: var(--space-3) var(--space-5);
   margin: 0;
   width: 100%;
+}
+
+.spike-stat--wide {
+  grid-column: 1 / -1;
 }
 
 .spike-stats dt {
@@ -418,7 +428,8 @@
 .spike-report {
   box-sizing: border-box;
   width: 100%;
-  height: 260px;
+  flex: 1;
+  min-height: 120px;
   padding: var(--space-3);
   resize: none;
   color: var(--color-text-primary);

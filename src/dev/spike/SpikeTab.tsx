@@ -26,6 +26,7 @@ import {
 } from './touch-log';
 import './spike.css';
 
+/** Diagonals offered: the monitors of the desk and the range of the Design System (43 to 55). */
 const DIAGONALS = [24, 27, 32, 43, 55] as const;
 
 interface Run {
@@ -59,6 +60,8 @@ export function SpikeTab() {
   const [touchLog, setTouchLog] = useState<TouchLog>(EMPTY_TOUCH_LOG);
   const [taps, setTaps] = useState<Record<number, Tap[]>>({});
   const [report, setReport] = useState('');
+  const [copyStatus, setCopyStatus] = useState<'copied' | 'failed' | null>(null);
+  const reportRef = useRef<HTMLTextAreaElement>(null);
   const runnerRef = useRef<{ cancel: () => void } | null>(null);
   const fpsRef = useRef<HTMLOutputElement>(null);
 
@@ -118,6 +121,7 @@ export function SpikeTab() {
 
   function makeReport() {
     const { versions, screen } = describeInfo(info);
+    setCopyStatus(null);
     setReport(
       buildReport({
         generatedAt: formatDateTime(new Date()),
@@ -139,8 +143,29 @@ export function SpikeTab() {
     );
   }
 
-  function copyReport() {
-    void navigator.clipboard?.writeText(report).catch(() => undefined);
+  /**
+   * The clipboard API needs a permission, and the Electron shell denies every permission (ADR
+   * 0017): there it fails. The fallback selects the text of the box and uses the old copy command,
+   * which asks for nothing.
+   */
+  async function copyReport() {
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(report);
+      copied = true;
+    } catch {
+      const area = reportRef.current;
+      if (area) {
+        area.focus();
+        area.select();
+        try {
+          copied = document.execCommand('copy');
+        } catch {
+          copied = false;
+        }
+      }
+    }
+    setCopyStatus(copied ? 'copied' : 'failed');
   }
 
   function onTouchEvent(event: TouchEvent) {
@@ -262,14 +287,14 @@ export function SpikeTab() {
               {formatNumber(targetsMm.minimum, 1)} mm · {formatNumber(targetsMm.recommended, 1)} mm
             </dd>
           </div>
-          <div>
+          <div className="spike-stat--wide">
             <dt className="type-caption">Palco em pixels físicos · carga do 4K</dt>
             <dd className="type-data" data-testid="spike-load">
               {physical.width} × {physical.height} ·{' '}
               {formatNumber(loadComparedTo4k(physical.width, physical.height) * 100, 0)}%
             </dd>
           </div>
-          <div>
+          <div className="spike-stat--wide">
             <dt className="type-caption">Chip gráfico</dt>
             <dd className="type-data" data-testid="spike-gpu">
               {gpu}
@@ -280,13 +305,19 @@ export function SpikeTab() {
           <Button variant="primary" onPress={makeReport}>
             Gerar relatório
           </Button>
-          <Button variant="secondary" onPress={copyReport} disabled={report === ''}>
+          <Button variant="secondary" onPress={() => void copyReport()} disabled={report === ''}>
             Copiar
           </Button>
         </div>
+        <p className="type-caption showcase-note" role="status" data-testid="spike-copy-status">
+          {copyStatus === 'copied' && 'Relatório copiado.'}
+          {copyStatus === 'failed' &&
+            'Não foi possível copiar. Clique no texto, aperte Ctrl+A e depois Ctrl+C.'}
+        </p>
         <textarea
           className="spike-report type-data"
           data-testid="spike-report"
+          ref={reportRef}
           readOnly
           value={report}
           placeholder="O relatório aparece aqui."
