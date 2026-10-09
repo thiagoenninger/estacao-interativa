@@ -8,6 +8,7 @@ import { IconsTab } from './IconsTab';
 import { ObjectsTab } from './ObjectsTab';
 import { PlatformTab } from './PlatformTab';
 import { SpaceShapeTab } from './SpaceShapeTab';
+import { SpikeTab } from '../spike/SpikeTab';
 import { TypographyTab } from './TypographyTab';
 import './showcase.css';
 
@@ -21,6 +22,7 @@ const TABS = [
   ['content', 'Conteúdo', ContentTab],
   ['objects', 'Objetos', ObjectsTab],
   ['platform', 'Plataforma', PlatformTab],
+  ['spike', 'Desempenho', SpikeTab],
 ] as const;
 
 type TabId = (typeof TABS)[number][0];

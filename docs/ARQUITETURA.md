@@ -68,6 +68,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `src/object/`                   | `ObjectDrawing`, leitor de SVG, auditoria dos desenhos e regras de estado |
 | `src/platform/`                 | O que a casca Electron conta à página (`StationInfo`) e `getStation()`    |
 | `src/dev/showcase/`             | Vitrine de validação, aberta com `?showcase` (ADR 0012)                   |
+| `src/dev/spike/`                | Teste de desempenho, a aba Desempenho da vitrine (ADR 0018)               |
 | `src/styles/`                   | Estilos globais                                                           |
 | `src/test/`                     | Todos os testes, em pastas que espelham `src/`, e os auxiliares (`setup.ts`, `css.ts`) |
 
@@ -165,7 +166,7 @@ aplicativo, por CSS (ADR 0016).
 4. **Auditoria** (`audit.ts`, mais `scripts/audit-svg.ts`): confere os desenhos contra as
    regras da Foundations 07. Roda com `npm run audit:svg` e não faz parte do `npm run check`.
 
-## Casca Electron (Etapa 06)
+## Casca Electron (Etapa 07a)
 
 A casca é a camada Plataforma: abre a janela, escolhe o modo (quiosque ou janela comum),
 ajusta o zoom à tela e protege a página. Ela é fina de propósito: `electron/main.ts` só
@@ -221,3 +222,33 @@ existe em desenvolvimento ou com `--devtools`.
 **Ainda não existe** (etapas seguintes): preparação do Windows para quiosque, início
 automático, recuperação de falhas e atalho de manutenção (Etapa 21); empacotamento e
 instalador (Etapa 22); atualização (Etapa 24); log em arquivo (a definir).
+
+## Teste de desempenho (Etapa 07a)
+
+Ferramenta de desenvolvimento, aberta na aba **Desempenho** da vitrine (`src/dev/spike/`). Mede o que o Roadmap marca como risco (R1, R2 e R3): se as animações mais pesadas, sobretudo as da seleção de material (M02), rodam a 60 quadros por segundo no hardware da estação, e como o painel de toque infravermelho responde. A medição de verdade acontece na Etapa 07b, no hardware de referência; esta etapa entrega o kit e a primeira medição no computador de desenvolvimento.
+
+| Arquivo                                  | Papel                                                                          |
+| ---------------------------------------- | ------------------------------------------------------------------------------ |
+| `scenes.ts`                              | As 8 cenas, os efeitos que cada uma liga, o aquecimento e a duração             |
+| `SpikeStage.tsx` e `spike.css`           | A página de teste, no Palco inteiro; uma regra de CSS por efeito (`data-fx`)    |
+| `runner.ts`                              | Toca as cenas em sequência, descarta o aquecimento e guarda o instante de cada quadro |
+| `frame-stats.ts` e `criteria.ts`         | Estatística dos quadros e os limites de bom, atenção e ruim                     |
+| `touch-log.ts` e `TouchPanel.tsx`        | Acompanha os dedos como o aplicativo fará: o primeiro vale, os outros são ignorados |
+| `target-taps.ts` e `TargetsPanel.tsx`    | Quadrados de 32 a 112 px: onde o dedo cai em relação ao centro, em milímetros    |
+| `physical-size.ts`                       | Tamanho físico da tela pela diagonal e carga em relação ao painel 4K            |
+| `report.ts`, `environment.ts`, `format.ts` | Relatório em Markdown para copiar e leitura do chip gráfico                   |
+| `SpikeTab.tsx`                           | A aba: cenas, toque, alvos, tela em teste e relatório                           |
+
+**As cenas.** Todas desenham a mesma página (o universo flutuando como no M08, o objeto selecionado, a órbita com as esferas); o que muda é o que se mexe além da flutuação, e o custo de cada coisa aparece como a diferença para a cena-base. `Espera` é só o universo; `Objeto selecionado` é a base das demais. As cenas seguintes ligam um efeito cada: `Espessura do traço` (`stroke-width`), `Recuo por grupo` (`stroke-opacity`), `Recuo por cópia` (cruza a opacidade de duas cópias do desenho, a alternativa do Roadmap para o R1), `Anel desenhado` (`stroke-dashoffset`), `M02 completa` e `M02 com recuo por cópia`. As duas últimas juntam o que o M02 faz ao mesmo tempo: traço, recuo, arco, órbita deslizando e girando, universo recuando e painel entrando. A troca entre o estado antes e o depois se repete sem pausa (a cada 1,7 s, logo depois dos 1560 ms do M02): é o **pior caso**, mais duro que o uso real.
+
+**A medição.** Cada cena ocupa o Palco inteiro (o que custa é o número de pixels desenhados) e roda 1,5 s de aquecimento, descartado, e 10 s medidos. O instante de cada quadro vem de `requestAnimationFrame`. Saem: fps médio, quadro típico (mediana), os 5% piores quadros, o pior quadro e os quadros perdidos (uma pausa de 2 atualizações perde 1 quadro, de 3 perde 2), em relação aos 60 Hz do painel. A troca de fase é feita direto no elemento, sem React, para a medição não incluir trabalho nosso.
+
+| Veredito | Condição                                                                        |
+| -------- | ------------------------------------------------------------------------------- |
+| bom      | média de 57 fps ou mais, 5% piores de 18 ms ou menos e no máximo 2% de quadros perdidos |
+| ruim     | média abaixo de 45 fps ou mais de 10% de quadros perdidos                        |
+| atenção  | o que ficar entre os dois                                                        |
+
+**Como usar.** `npm run electron:start -- --windowed --showcase`, maximizar a janela na tela a medir, abrir a aba Desempenho, informar a diagonal da tela e tocar em **Medir todas** (cerca de 1,5 minuto). **Gerar relatório** monta um texto em Markdown, que **Copiar** leva para a área de transferência. O relatório diz o tamanho do Palco em pixels físicos e a carga em relação ao painel 4K (o Palco em 3840 × 2160 é 100%; em Full HD, 25%).
+
+**O que o teste não faz.** Não simula 4K numa tela Full HD: um fator de escala forçado muda o tamanho do pixel, não quantos pixels a placa desenha. Para saber o que o 4K faz, é preciso uma tela 4K (Etapa 07b). Mede transições de CSS; se a Etapa 10 usar GSAP, o custo do JavaScript se soma e o teste se repete. Se o relatório indicar desenho por software (SwiftShader, llvmpipe) ou chip gráfico indisponível, os números não valem para a estação.

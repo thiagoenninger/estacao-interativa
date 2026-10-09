@@ -1,0 +1,438 @@
+/* Performance test (Stage 07a). The stage of the test is the whole 1920 × 1080 Stage, drawn above
+   the showcase. It is fixed on purpose: the Stage is transformed, so "fixed" here means "fill
+   the Stage". Every effect (data-fx) has its own block below; data-phase "a" is the state before
+   and "b" the state after, and the stage flips between them back and forth. */
+.spike {
+  position: fixed;
+  inset: 0;
+  z-index: var(--depth-90);
+  overflow: hidden;
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
+
+/* ---- universe at rest (Motion 04 · M08): only transform ---- */
+.spike-slot {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.spike-scale {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.spike-float {
+  animation: spike-float var(--float-period) ease-in-out var(--float-delay) infinite;
+}
+
+@keyframes spike-float {
+  0%,
+  100% {
+    transform: translate(0, calc(var(--float-amplitude) * -1)) rotate(-1deg);
+  }
+  50% {
+    transform: translate(2px, var(--float-amplitude)) rotate(1deg);
+  }
+}
+
+/* With an object selected, the others stay behind at 85% size and 20% opacity (state 03). */
+.spike[data-selected='true'] .spike-scale {
+  opacity: var(--opacity-universe-muted);
+  transform: translate(-50%, -50%) scale(0.85);
+}
+
+/* ---- selected object, orbit and nodes ---- */
+.spike-center {
+  position: absolute;
+  top: 540px;
+  left: 960px;
+  width: 0;
+  height: 0;
+}
+
+.spike-layers {
+  position: absolute;
+  top: -240px;
+  left: -320px;
+  width: 640px;
+  height: 480px;
+}
+
+.spike-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spike-orbit {
+  position: absolute;
+  top: -404px;
+  left: -404px;
+  width: 808px;
+  height: 808px;
+}
+
+.spike-orbit svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.spike-ring {
+  fill: none;
+  stroke: var(--color-orbit-line);
+  stroke-width: var(--stroke-thin);
+  stroke-dasharray: 1;
+}
+
+.spike-arc {
+  fill: none;
+  stroke: var(--color-orbit-active);
+  stroke-width: var(--stroke-regular);
+  stroke-dasharray: 1;
+}
+
+.spike-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 76px;
+  height: 76px;
+  margin: -38px 0 0 -38px;
+  transform: translate(calc(var(--node-x) * 1px), calc(var(--node-y) * 1px));
+}
+
+.spike-connector {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.spike-connector line {
+  stroke: var(--color-orbit-active);
+  stroke-width: var(--stroke-thin);
+  stroke-dasharray: 1;
+}
+
+.spike-panel {
+  position: absolute;
+  top: 64px;
+  left: 1312px;
+  width: 544px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.spike-block {
+  opacity: 0;
+  transform: translateX(24px);
+}
+
+.spike-block h3,
+.spike-block p {
+  margin: 0;
+}
+
+/* ---- effect: stroke-width (the group of the material gets 1.35 × thicker) ---- */
+.spike[data-fx~='stroke-width'] .spike-center [data-state='highlight'] {
+  transition: stroke-width var(--duration-medium) var(--easing-standard) 280ms;
+}
+
+.spike[data-fx~='stroke-width'][data-phase='a'] .spike-center [data-state='highlight'] {
+  --stroke-boost: 1;
+}
+
+/* ---- effect: recede-group (the groups without the material fade, one by one) ---- */
+.spike[data-fx~='recede-group'] .spike-center [data-state='recede'] {
+  transition:
+    stroke-opacity var(--duration-medium) var(--easing-standard) 280ms,
+    fill-opacity var(--duration-medium) var(--easing-standard) 280ms;
+}
+
+.spike[data-fx~='recede-group'][data-phase='a'] .spike-center [data-state='recede'] {
+  stroke-opacity: 1;
+  fill-opacity: 1;
+}
+
+/* ---- effect: recede-copy (two copies of the drawing cross their opacity) ---- */
+.spike[data-fx~='recede-copy'] .spike-layer {
+  transition: opacity var(--duration-medium) var(--easing-standard) 280ms;
+  will-change: opacity;
+}
+
+.spike[data-fx~='recede-copy'][data-phase='a'] .spike-layer--lit,
+.spike[data-fx~='recede-copy'][data-phase='b'] .spike-layer--base {
+  opacity: 0;
+}
+
+/* ---- effect: ring-draw (the orbit draws itself: stroke-dashoffset) ---- */
+.spike[data-fx~='ring-draw'] .spike-ring,
+.spike[data-fx~='ring-draw'] .spike-arc {
+  transition: stroke-dashoffset var(--duration-medium) var(--easing-enter);
+}
+
+.spike[data-fx~='ring-draw'][data-phase='a'] .spike-ring,
+.spike[data-fx~='ring-draw'][data-phase='a'] .spike-arc {
+  stroke-dashoffset: 1;
+}
+
+/* ---- effect: arc-heat (the active arc and the connector warm up) ---- */
+.spike[data-fx~='arc-heat'] .spike-arc {
+  transition: opacity var(--duration-heat) var(--easing-standard) 80ms;
+}
+
+.spike[data-fx~='arc-heat'] .spike-connector line {
+  transition: stroke-dashoffset var(--duration-fast) var(--easing-enter) 980ms;
+}
+
+.spike[data-fx~='arc-heat'][data-phase='a'] .spike-arc {
+  opacity: 0;
+}
+
+.spike[data-fx~='arc-heat'][data-phase='a'] .spike-connector line {
+  stroke-dashoffset: 1;
+}
+
+/* ---- effect: orbit-slide (object and orbit slide left, the ring turns, the spheres change) ---- */
+.spike[data-fx~='orbit-slide'] .spike-center {
+  transition: transform var(--duration-slow) var(--easing-standard) 280ms;
+}
+
+.spike[data-fx~='orbit-slide'] .spike-orbit {
+  transition: transform var(--duration-slow) var(--easing-standard) 280ms;
+}
+
+.spike[data-fx~='orbit-slide'] .spike-node {
+  transition:
+    transform var(--duration-base) var(--easing-standard) 80ms,
+    opacity var(--duration-base) var(--easing-standard) 80ms;
+}
+
+.spike[data-fx~='orbit-slide'][data-phase='b'] .spike-center {
+  transform: translateX(-304px);
+}
+
+.spike[data-fx~='orbit-slide'][data-phase='b'] .spike-orbit {
+  transform: rotate(90deg);
+}
+
+.spike[data-fx~='orbit-slide'][data-phase='b'] .spike-node {
+  opacity: var(--opacity-material-secondary);
+}
+
+.spike[data-fx~='orbit-slide'][data-phase='b'] .spike-node--selected {
+  opacity: 1;
+  transform: translate(calc(var(--node-x) * 1px), calc(var(--node-y) * 1px)) scale(1.42);
+}
+
+/* ---- effect: universe-recede (the other objects shrink and fade) ---- */
+.spike[data-fx~='universe-recede'] .spike-scale {
+  transition:
+    transform var(--duration-slow) var(--easing-standard) 330ms,
+    opacity var(--duration-slow) var(--easing-standard) 330ms;
+}
+
+.spike[data-fx~='universe-recede'][data-phase='b'] .spike-scale {
+  opacity: var(--opacity-universe-muted-panel);
+  transform: translate(-50%, -50%) scale(0.4);
+}
+
+/* ---- effect: panel (five blocks enter one after the other) ---- */
+.spike[data-fx~='panel'] .spike-block {
+  transition:
+    opacity var(--duration-medium) var(--easing-enter)
+      calc(500ms + var(--block) * var(--stagger-step)),
+    transform var(--duration-medium) var(--easing-enter)
+      calc(500ms + var(--block) * var(--stagger-step));
+}
+
+.spike[data-fx~='panel'][data-phase='b'] .spike-block {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---- the counter and the stop button, in the corner ---- */
+.spike-hud {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: var(--depth-90);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: var(--stroke-hairline) solid var(--color-divider-strong);
+}
+
+.spike-hud output {
+  min-width: 11ch;
+}
+
+/* ---- the tab (before and after the test) ---- */
+.spike-tab {
+  display: grid;
+  grid-template-columns: 700px 540px 1fr;
+  grid-template-rows: minmax(0, 1fr);
+  gap: var(--space-6);
+  height: 100%;
+}
+
+.spike-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 0;
+}
+
+.spike-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.spike-table th,
+.spike-table td {
+  padding: 2px var(--space-2);
+  text-align: left;
+  font-weight: 400;
+}
+
+.spike-table thead th {
+  color: var(--color-text-secondary);
+}
+
+.spike-table [data-verdict='bad'] {
+  color: var(--color-state-pressed);
+  font-weight: 600;
+}
+
+.spike-table [data-verdict='good'] {
+  color: var(--color-feedback-connection);
+}
+
+.spike-pad {
+  position: relative;
+  overflow: hidden;
+  border: var(--stroke-hairline) dashed var(--color-divider-strong);
+  touch-action: none;
+  user-select: none;
+}
+
+.spike-pad-hint {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+.spike-finger {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border: var(--stroke-regular) solid var(--color-text-secondary);
+  border-radius: var(--radius-full);
+  pointer-events: none;
+}
+
+.spike-finger[data-primary='true'] {
+  background: var(--color-state-active);
+  border-color: var(--color-state-pressed);
+}
+
+.spike-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3) var(--space-5);
+  margin: 0;
+  width: 100%;
+}
+
+.spike-stat--wide {
+  grid-column: 1 / -1;
+}
+
+.spike-stats dt {
+  color: var(--color-text-secondary);
+}
+
+.spike-stats dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.spike-targets {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-5);
+}
+
+.spike-targets-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.spike-targets-table th,
+.spike-targets-table td {
+  padding: 0 var(--space-4) 0 0;
+  text-align: left;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.spike-targets-table thead th {
+  color: var(--color-text-secondary);
+}
+
+.spike-target {
+  position: relative;
+  box-sizing: border-box;
+  border: var(--stroke-regular) solid var(--color-border-interactive);
+  background: var(--color-surface);
+  touch-action: none;
+  user-select: none;
+}
+
+.spike-target::before,
+.spike-target::after {
+  content: '';
+  position: absolute;
+  background: var(--color-state-active);
+}
+
+.spike-target::before {
+  top: 50%;
+  left: 4px;
+  right: 4px;
+  height: var(--stroke-hairline);
+}
+
+.spike-target::after {
+  left: 50%;
+  top: 4px;
+  bottom: 4px;
+  width: var(--stroke-hairline);
+}
+
+.spike-report {
+  box-sizing: border-box;
+  width: 100%;
+  flex: 1;
+  min-height: 120px;
+  padding: var(--space-3);
+  resize: none;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: var(--stroke-hairline) solid var(--color-divider-strong);
+}

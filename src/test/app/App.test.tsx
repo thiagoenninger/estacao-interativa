@@ -150,6 +150,16 @@ describe('App · Showcase', () => {
     expect(screen.getByTestId('platform-fact-shell').textContent).toContain('Navegador comum');
   });
 
+  it('shows the performance test on the Performance tab', async () => {
+    render(<App />);
+    await screen.findByTestId('showcase');
+    fireEvent.click(screen.getByRole('tab', { name: 'Desempenho' }), { detail: 0 });
+
+    expect(screen.getByTestId('showcase-tab-spike')).toBeTruthy();
+    expect(screen.getAllByTestId(/^scene-row-/)).toHaveLength(8);
+    expect(screen.getByTestId('spike-size').textContent).toBe('952 × 535 mm');
+  });
+
   it('counts only the touches that end inside the button', async () => {
     render(<App />);
     await screen.findByTestId('showcase');

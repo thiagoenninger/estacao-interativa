@@ -3,6 +3,7 @@ import { contrastRatio, parseCustomProperties } from '@/test/css';
 import colorCss from '@/design-system/tokens/color.css?raw';
 import motionCss from '@/design-system/tokens/motion.css?raw';
 import spaceShapeCss from '@/design-system/tokens/space-shape.css?raw';
+import { TOUCH } from '@/design-system/measures';
 
 const color = parseCustomProperties(colorCss);
 const spaceShape = parseCustomProperties(spaceShapeCss);
@@ -133,5 +134,10 @@ describe('space, shape and opacity tokens (Foundations 04)', () => {
     }
     expect(spaceShape.get('--touch-target-min')).toBe('64px');
     expect(spaceShape.get('--touch-gap-min')).toBe('24px');
+  });
+
+  it('the touch targets in TypeScript are the ones in CSS', () => {
+    expect(spaceShape.get('--touch-target-min')).toBe(`${TOUCH.minTarget}px`);
+    expect(spaceShape.get('--touch-gap-min')).toBe(`${TOUCH.minGap}px`);
   });
 });
