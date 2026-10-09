@@ -47,3 +47,11 @@ export const ORBIT_RADIUS = 400;
 
 // Maximum box of the selected object
 export const OBJECT_MAX_BOX = { width: 640, height: 480 } as const;
+
+/** Touch targets (Foundations 04): minimum and recommended sizes, and the space between targets. */
+export const TOUCH = {
+  minTarget: 64,
+  recommendedTarget: 80,
+  materialTarget: 112,
+  minGap: 24,
+} as const;

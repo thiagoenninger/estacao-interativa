@@ -7,6 +7,7 @@ import {
   SAFE_AREA,
   STAGE,
   TEXT_COLUMN,
+  TOUCH,
 } from '@/design-system/measures';
 
 describe('Design System measures', () => {
@@ -36,5 +37,14 @@ describe('Design System measures', () => {
 
   it('the navigation zone ends at the bottom margin', () => {
     expect(NAVIGATION_ZONE.y + NAVIGATION_ZONE.height).toBe(STAGE.height - 64);
+  });
+
+  it('the touch targets are the Foundations 04 numbers', () => {
+    expect(TOUCH).toEqual({
+      minTarget: 64,
+      recommendedTarget: 80,
+      materialTarget: 112,
+      minGap: 24,
+    });
   });
 });
