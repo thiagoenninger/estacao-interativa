@@ -4,7 +4,7 @@ Experiência interativa para instalação permanente da Casa de Metal: telas
 touchscreen em modo quiosque onde visitantes investigam objetos cotidianos e
 descobrem os metais e minerais que os compõem.
 
-> **Status:** em desenvolvimento — Etapa 07a de 25.
+> **Status:** em desenvolvimento — Etapa 08 de 25.
 
 ## Escopo
 
@@ -17,8 +17,9 @@ aparecem como opção de exploração.
 - React 19 + TypeScript 6 + Vite 8
 - Vitest (testes) · ESLint + Prettier (qualidade de código)
 - Zod (validação dos dados)
+- Zustand (estado da experiência)
 - Electron 44 (casca desktop, modo quiosque)
-- Previsto: Zustand (estado) · GSAP (motion)
+- Previsto: GSAP (motion)
 
 ## Requisitos
 
@@ -60,6 +61,10 @@ npm run electron:start -- --windowed --showcase
 ```
 
 Maximize a janela na tela que quer medir, abra a aba **Desempenho**, escolha o tamanho (diagonal) dessa tela e toque em **Medir todas**. Cada cena dura 10 s mais 1,5 s de aquecimento: não mexa no computador enquanto mede. Os critérios e o que o teste não faz estão no ADR 0018.
+
+## Experiência (máquina de estados)
+
+A aba **Experiência** da vitrine (`?showcase`) navega pela máquina de estados com botões: escolhe objeto, material, camada, objeto relacionado, Voltar e Início, e mostra o estado, a trilha, o registro de cada evento e a contagem de inatividade (aviso aos 50 s, retorno aos 60 s). O seletor de velocidade (1×, 5×, 20×, 60×) acelera o relógio para ver o retorno automático sem esperar um minuto. **Tudo aberto (demonstração)** libera todos os materiais e camadas, porque o conteúdo provisório ainda tem poucos abertos. As regras e as decisões estão no ADR 0019.
 
 ## Convenções
 

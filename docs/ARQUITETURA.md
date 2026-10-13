@@ -45,7 +45,7 @@ Modelo normalizado: Elemento, Material, FonteMineral, RotaDeObtenção, Objeto, 
 
 Instalador publicado no Github Releases. Atualização remota prevista para a Etapa 24.
 
-## Estrutura atual do código (Etapa 06)
+## Estrutura atual do código (Etapa 08)
 
 | Pasta                           | Conteúdo                                                                  |
 | ------------------------------- | ------------------------------------------------------------------------- |
@@ -64,10 +64,11 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `src/design-system/icons/`      | Componente `Icon` e lista dos nomes                                       |
 | `src/design-system/buttons/`    | `Button`, `IconButton`, `BackButton`, `HomeButton` e a regra de toque     |
 | `src/design-system/background/` | `Background`: retícula e marcas de registro                               |
+| `src/experience/`               | Máquina de estados, store, sessão e serviço de inatividade (ADR 0019)     |
 | `src/motion/`                   | Espelho em TypeScript dos tokens de movimento                             |
 | `src/object/`                   | `ObjectDrawing`, leitor de SVG, auditoria dos desenhos e regras de estado |
 | `src/platform/`                 | O que a casca Electron conta à página (`StationInfo`) e `getStation()`    |
-| `src/dev/showcase/`             | Vitrine de validação, aberta com `?showcase` (ADR 0012)                   |
+| `src/dev/showcase/`             | Vitrine de validação, aberta com `?showcase` (ADR 0012); a aba Experiência fica aqui |
 | `src/dev/spike/`                | Teste de desempenho, a aba Desempenho da vitrine (ADR 0018)               |
 | `src/styles/`                   | Estilos globais                                                           |
 | `src/test/`                     | Todos os testes, em pastas que espelham `src/`, e os auxiliares (`setup.ts`, `css.ts`) |
@@ -252,3 +253,36 @@ Ferramenta de desenvolvimento, aberta na aba **Desempenho** da vitrine (`src/dev
 **Como usar.** `npm run electron:start -- --windowed --showcase`, maximizar a janela na tela a medir, abrir a aba Desempenho, informar a diagonal da tela e tocar em **Medir todas** (cerca de 1,5 minuto). **Gerar relatório** monta um texto em Markdown, que **Copiar** leva para a área de transferência. O relatório diz o tamanho do Palco em pixels físicos e a carga em relação ao painel 4K (o Palco em 3840 × 2160 é 100%; em Full HD, 25%).
 
 **O que o teste não faz.** Não simula 4K numa tela Full HD: um fator de escala forçado muda o tamanho do pixel, não quantos pixels a placa desenha. Para saber o que o 4K faz, é preciso uma tela 4K (Etapa 07b). Mede transições de CSS; se a Etapa 10 usar GSAP, o custo do JavaScript se soma e o teste se repete. Se o relatório indicar desenho por software (SwiftShader, llvmpipe) ou chip gráfico indisponível, os números não valem para a estação.
+
+## Máquina de estados e sessão (Etapa 08)
+
+A camada Experiência (`src/experience/`) decide **para onde a visita vai**; as telas só leem o estado e mandam eventos. Nada aqui desenha ou anima. As regras vêm dos Fluxos 01 a 03 do Design System (ADR 0019).
+
+| Arquivo                        | Papel                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------ |
+| `state.ts`                     | O estado (nível, objeto, material, camada, item destacado, trilha, aviso) e `INITIAL_STATE` |
+| `events.ts`                    | Os 9 eventos do visitante e os 2 do serviço de inatividade                      |
+| `transitions.ts`               | A tabela `TRANSITIONS[nível][evento]` (a Matriz de interações) e `transition()`   |
+| `catalog.ts`                   | `Catalog`: perguntas de sim ou não sobre o conteúdo; `createCatalog(index)` responde a partir de `src/content` |
+| `store.ts`                     | Store Zustand (`zustand/vanilla`) com o estado e `dispatch`                      |
+| `clock.ts`                     | `Clock`: relógio do sistema e relógio acelerado (para a aba Experiência)          |
+| `idle.ts`                      | Serviço de inatividade: aviso aos 50 s, retorno aos 60 s, reinício a cada toque  |
+| `session.ts`                   | Junta store e inatividade: `dispatch`, `touch`, `dispose`                         |
+| `context.ts`, `ExperienceProvider.tsx` | `useSession()`, `useExperience(seletor)` e o provedor para o React         |
+
+**Os quatro níveis.** `universe` (01), `object` (03), `material` (04/05) e `layer` (camada aprofundada). O objeto relacionado abre no nível `material` com o mesmo material.
+
+**A transição é pura.** `transition(estado, evento, catálogo)` devolve o mesmo objeto quando nada acontece. Qualquer toque do visitante fecha o aviso de retorno, inclusive um toque que não faz nada.
+
+| Nível      | Eventos que ele aceita                                                           |
+| ---------- | -------------------------------------------------------------------------------- |
+| `universe` | selecionar objeto                                                                |
+| `object`   | selecionar objeto (troca o protagonista), selecionar material, Voltar             |
+| `material` | selecionar objeto (volta ao nível 03), selecionar material (troca), item de "Presente em", abrir camada, Voltar, Início |
+| `layer`    | selecionar material (fecha a camada), abrir camada (troca), objeto relacionado, Voltar, Início |
+
+Tocar no fundo e tocar no aviso não mudam o nível em lugar nenhum.
+
+**Inatividade.** O serviço só corre fora do universo. Aos 50 s manda `idle-warn` (o aviso aparece), aos 60 s manda `idle-return` (a visita volta a `INITIAL_STATE`, sem trilha nem memória). Cada `session.dispatch` e cada `session.touch` reinicia a contagem. O tempo vem de um `Clock` injetado: a produção usa o relógio do sistema, os testes usam um relógio falso e a aba Experiência usa um relógio acelerado.
+
+**O que a máquina ainda não faz.** Não trata toque (um por vez, elementos ainda entrando: Etapa 09), nem interrupção no meio de animação (Etapa 10 em diante), nem desenha o aviso (Etapa 19) ou a trilha (Etapa 18).
