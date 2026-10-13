@@ -321,3 +321,122 @@
 .platform-fact dd {
   margin: 0;
 }
+
+/* experience */
+.experience-tab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  height: 100%;
+}
+
+.experience-header {
+  display: flex;
+  gap: var(--space-8);
+  flex: none;
+}
+
+.experience-columns {
+  display: grid;
+  grid-template-columns: 460px 1fr 480px;
+  gap: var(--space-6);
+  flex: 1;
+  min-height: 0;
+}
+
+.experience-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-height: 0;
+  min-width: 0;
+}
+
+.experience-column--controls {
+  overflow-y: auto;
+}
+
+.experience-tab .button {
+  height: var(--space-8);
+  padding: 0 var(--space-4);
+}
+
+.experience-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.experience-facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.experience-fact {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.experience-fact dt,
+.experience-fact dd {
+  margin: 0;
+}
+
+.experience-bar {
+  height: var(--space-2);
+  margin-top: var(--space-3);
+  background: var(--color-divider);
+}
+
+.experience-bar-fill {
+  height: 100%;
+  background: var(--color-feedback-connection);
+}
+
+.experience-bar[data-phase='warning'] .experience-bar-fill {
+  background: var(--color-state-active);
+}
+
+.experience-accepted {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.experience-log-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.experience-log {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.experience-log-entry {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2) 0;
+  border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.experience-log-entry[data-result='sem efeito'] {
+  color: var(--color-text-tertiary);
+}
+
+.experience-log-entry[data-result='automático'] {
+  color: var(--color-state-active);
+}

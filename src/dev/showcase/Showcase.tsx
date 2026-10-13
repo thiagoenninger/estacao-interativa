@@ -4,6 +4,7 @@ import { BackgroundTab } from './BackgroundTab';
 import { ButtonsTab } from './ButtonsTab';
 import { ColorsTab } from './ColorsTab';
 import { ContentTab } from './ContentTab';
+import { ExperienceTab } from './ExperienceTab';
 import { IconsTab } from './IconsTab';
 import { ObjectsTab } from './ObjectsTab';
 import { PlatformTab } from './PlatformTab';
@@ -23,6 +24,7 @@ const TABS = [
   ['objects', 'Objetos', ObjectsTab],
   ['platform', 'Plataforma', PlatformTab],
   ['spike', 'Desempenho', SpikeTab],
+  ['experience', 'Experiência', ExperienceTab],
 ] as const;
 
 type TabId = (typeof TABS)[number][0];
