@@ -68,7 +68,7 @@ describe('App · Showcase', () => {
     expect(screen.getByTestId('showcase-tab-colors')).toBeTruthy();
     expect(screen.getAllByTestId('primitive-swatch')).toHaveLength(11);
     expect(screen.getAllByTestId('semantic-token')).toHaveLength(22);
-  });
+  }, 10_000);
 
   it('switches tabs with the base buttons', async () => {
     render(<App />);

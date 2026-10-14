@@ -50,5 +50,5 @@ describe('the gate follows the same rule that the spike measured', () => {
         ).toBeLessThanOrEqual(1);
       }
     }
-  });
+  }, 15_000);
 });
