@@ -45,7 +45,7 @@ Modelo normalizado: Elemento, Material, FonteMineral, RotaDeObtenção, Objeto, 
 
 Instalador publicado no Github Releases. Atualização remota prevista para a Etapa 24.
 
-## Estrutura atual do código (Etapa 08)
+## Estrutura atual do código (Etapa 09)
 
 | Pasta                           | Conteúdo                                                                  |
 | ------------------------------- | ------------------------------------------------------------------------- |
@@ -65,6 +65,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `src/design-system/buttons/`    | `Button`, `IconButton`, `BackButton`, `HomeButton` e a regra de toque     |
 | `src/design-system/background/` | `Background`: retícula e marcas de registro                               |
 | `src/experience/`               | Máquina de estados, store, sessão e serviço de inatividade (ADR 0019)     |
+| `src/interaction/`              | O portão de toque: um dedo por vez e elemento entrando ignora o toque (ADR 0020) |
 | `src/motion/`                   | Espelho em TypeScript dos tokens de movimento                             |
 | `src/object/`                   | `ObjectDrawing`, leitor de SVG, auditoria dos desenhos e regras de estado |
 | `src/platform/`                 | O que a casca Electron conta à página (`StationInfo`) e `getStation()`    |
@@ -286,3 +287,21 @@ Tocar no fundo e tocar no aviso não mudam o nível em lugar nenhum.
 **Inatividade.** O serviço só corre fora do universo. Aos 50 s manda `idle-warn` (o aviso aparece), aos 60 s manda `idle-return` (a visita volta a `INITIAL_STATE`, sem trilha nem memória). Cada `session.dispatch` e cada `session.touch` reinicia a contagem. O tempo vem de um `Clock` injetado: a produção usa o relógio do sistema, os testes usam um relógio falso e a aba Experiência usa um relógio acelerado.
 
 **O que a máquina ainda não faz.** Não trata toque (um por vez, elementos ainda entrando: Etapa 09), nem interrupção no meio de animação (Etapa 10 em diante), nem desenha o aviso (Etapa 19) ou a trilha (Etapa 18).
+
+## Sistema de toque (Etapa 09)
+
+A tela inteira aceita **um toque de cada vez** (decisão C10). O portão (`src/interaction/`) não desenha nem anima: só decide **qual toque conta** e se o alvo está pronto para recebê-lo. As regras vêm de Flows 02 e Motion 04 (ADR 0020).
+
+| Arquivo                  | Papel                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------ |
+| `touch-gate.ts`          | `createTouchGate`: o primeiro ponteiro vale, os outros são ignorados até ele soltar |
+| `attach.ts`              | `acquireTouchGate`: acompanha todos os ponteiros da janela (com contagem de uso)   |
+| `opacity.ts`             | `effectiveOpacity` e `isEntering`: opacidade real, multiplicada pela dos pais        |
+| `constants.ts`           | `MIN_TOUCH_OPACITY` (50%)                                                          |
+| `context.ts`, `TouchGateProvider.tsx` | `useTouchGate()`, o portão compartilhado e o provedor (para testes)   |
+
+**Como um toque é tratado.** Ao pousar, o ponteiro entra no portão na fase de captura (antes de qualquer alvo): se não há outro dedo, vira o que conta. O botão (`usePress`) só reage se o ponteiro é o que conta e se ele próprio está com opacidade de 50% ou mais; ao soltar dentro do alvo, executa a ação. O portão libera o ponteiro depois de todos os alvos tratarem o "soltar".
+
+**Um toque novo vale na hora.** O segundo dedo só é descartado **enquanto o primeiro está na tela**. Depois que ele solta, qualquer toque novo conta, mesmo no meio de uma transição; quem redireciona a animação é a Etapa 10.
+
+**O que a tela não deixa travar.** Um "soltar" perdido não prende o portão: o mesmo `id` pousando de novo começa um toque novo, um dedo que o navegador chama de primeiro substitui um fantasma, um mouse solto fora da janela é liberado no movimento seguinte e a janela perdendo o foco zera tudo.

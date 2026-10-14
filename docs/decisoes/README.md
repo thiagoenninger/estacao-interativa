@@ -25,6 +25,7 @@ mudar, um novo ADR o substitui.
 | 0017 | Casca Electron: TypeScript direto, `app://`, zoom exato e página isolada     | aceita |
 | 0018 | Teste de desempenho: kit no aplicativo, limites fixos e decisão no hardware  | aceita |
 | 0019 | Máquina de estados pura, store Zustand e inatividade com relógio injetável   | aceita |
+| 0020 | Sistema de toque: um portão único para a tela inteira                        | aceita |
 
 Para uma nova decisão, copie `0000-modelo.md`, use o próximo número e
 atualize esta tabela.

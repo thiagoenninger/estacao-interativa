@@ -1,4 +1,5 @@
 import { useRef, useState, type MouseEvent, type PointerEvent } from 'react';
+import { isEntering, useTouchGate } from '../../interaction/index.ts';
 
 interface UsePressOptions {
   disabled?: boolean;
@@ -8,6 +9,7 @@ interface UsePressOptions {
 export function usePress({ disabled = false, onPress }: UsePressOptions) {
   const [pressed, setPressed] = useState(false);
   const activePointer = useRef<number | null>(null);
+  const gate = useTouchGate();
 
   function isInside(event: PointerEvent<HTMLElement>): boolean {
     const box = event.currentTarget.getBoundingClientRect();
@@ -27,6 +29,11 @@ export function usePress({ disabled = false, onPress }: UsePressOptions) {
   const handlers = {
     onPointerDown(event: PointerEvent<HTMLElement>) {
       if (disabled || activePointer.current !== null) return;
+      if (!gate.isPrimary(event.pointerId)) return;
+      if (isEntering(event.currentTarget)) {
+        gate.refuse('entering');
+        return;
+      }
       activePointer.current = event.pointerId;
       setPressed(true);
     },

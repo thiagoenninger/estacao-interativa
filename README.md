@@ -4,7 +4,7 @@ Experiência interativa para instalação permanente da Casa de Metal: telas
 touchscreen em modo quiosque onde visitantes investigam objetos cotidianos e
 descobrem os metais e minerais que os compõem.
 
-> **Status:** em desenvolvimento — Etapa 08 de 25.
+> **Status:** em desenvolvimento — Etapa 09 de 25.
 
 ## Escopo
 
@@ -65,6 +65,10 @@ Maximize a janela na tela que quer medir, abra a aba **Desempenho**, escolha o t
 ## Experiência (máquina de estados)
 
 A aba **Experiência** da vitrine (`?showcase`) navega pela máquina de estados com botões: escolhe objeto, material, camada, objeto relacionado, Voltar e Início, e mostra o estado, a trilha, o registro de cada evento e a contagem de inatividade (aviso aos 50 s, retorno aos 60 s). O seletor de velocidade (1×, 5×, 20×, 60×) acelera o relógio para ver o retorno automático sem esperar um minuto. **Tudo aberto (demonstração)** libera todos os materiais e camadas, porque o conteúdo provisório ainda tem poucos abertos. As regras e as decisões estão no ADR 0019.
+
+## Toque (um dedo por vez)
+
+A tela inteira aceita **um toque de cada vez**: o primeiro dedo que pousa vale, mesmo no fundo, e os outros são ignorados até ele soltar. Um elemento ainda entrando (opacidade abaixo de 50%) ignora o toque. A ação acontece ao soltar dentro do alvo; sair do alvo cancela. Os botões já seguem essas regras (`usePress` e `src/interaction/`); as decisões estão no ADR 0020.
 
 ## Convenções
 
