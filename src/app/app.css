@@ -1,0 +1,21 @@
+.session-readout {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  z-index: var(--depth-90);
+  padding: var(--space-1) var(--space-2);
+  font: 16px/1.4 var(--font-mono);
+  color: var(--color-text-primary);
+  background: var(--color-background-primary);
+  border: var(--stroke-hairline) solid var(--color-text-primary);
+  pointer-events: none;
+}
+
+.station-error {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  color: var(--color-text-primary);
+}
