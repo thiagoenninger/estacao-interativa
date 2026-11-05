@@ -4,7 +4,7 @@ Experiência interativa para instalação permanente da Casa de Metal: telas
 touchscreen em modo quiosque onde visitantes investigam objetos cotidianos e
 descobrem os metais e minerais que os compõem.
 
-> **Status:** em desenvolvimento — Etapa 10 de 25.
+> **Status:** em desenvolvimento — Etapa 11 de 25.
 
 ## Escopo
 
@@ -35,7 +35,7 @@ npm run dev          # servidor de desenvolvimento em http://localhost:5173
 
 Ferramentas de desenvolvimento, na URL ou no teclado:
 
-- Grade de depuração: `http://localhost:5173/?grid` ou a tecla G.
+- Grade de depuração: `http://localhost:5173/?grid` ou a tecla G. A grade também mostra, no canto, o nível da sessão e o objeto selecionado.
 - Vitrine do Design System, do conteúdo, dos objetos, da plataforma e do desempenho (cores, tipografia, ícones, botões, dados, desenhos, casca Electron, teste de desempenho): `http://localhost:5173/?showcase`.
 
 | Comando                    | O que faz                                                          |
@@ -72,7 +72,11 @@ A tela inteira aceita **um toque de cada vez**: o primeiro dedo que pousa vale, 
 
 ## Movimento (motion)
 
-A base das animações M01 a M08 fica em `src/motion/`: os tokens de duração e curva (espelho do CSS), o padrão de coreografia (cada tabela do Motion vira dados), o **canal** que toca uma coreografia por vez e a flutuação em espera (M08). Um toque novo durante uma transição **interrompe e redireciona a partir dos valores atuais**, sem salto e sem fila. O React decide o que existe; o GSAP decide como se move. Nenhuma tela usa o motion ainda: ele entra a partir da Etapa 11. As decisões estão no ADR 0021.
+A base das animações M01 a M08 fica em `src/motion/`: os tokens de duração e curva (espelho do CSS), o padrão de coreografia (cada tabela do Motion vira dados), o **canal** que toca uma coreografia por vez e a flutuação em espera (M08). Um toque novo durante uma transição **interrompe e redireciona a partir dos valores atuais**, sem salto e sem fila. O React decide o que existe; o GSAP decide como se move. O universo (Etapa 11) usa só a flutuação em espera; as coreografias entram a partir da Etapa 13. As decisões estão no ADR 0021.
+
+## Universo (tela inicial)
+
+O aplicativo abre no **universo** (Estado 01): o chamado principal no canto superior esquerdo ("Você sabe do que as coisas são feitas?") e os 8 objetos em três planos de profundidade, cada um com o seu rótulo, flutuando devagar (M08). Tocar num objeto o seleciona de verdade na sessão; a animação de seleção chega na Etapa 13, por isso a tela ainda não muda. Com `?grid`, um quadro no canto mostra o nível da sessão e o objeto selecionado. As posições dos objetos ficam em `data/objects.json` e seguem regras do Design System conferidas por teste (ADR 0022).
 
 ## Convenções
 

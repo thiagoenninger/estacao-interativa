@@ -45,7 +45,7 @@ Modelo normalizado: Elemento, Material, FonteMineral, RotaDeObtenção, Objeto, 
 
 Instalador publicado no Github Releases. Atualização remota prevista para a Etapa 24.
 
-## Estrutura atual do código (Etapa 10)
+## Estrutura atual do código (Etapa 11)
 
 | Pasta                           | Conteúdo                                                                  |
 | ------------------------------- | ------------------------------------------------------------------------- |
@@ -56,7 +56,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `assets/materials/`             | As 7 esferas de material (PNG, `material-*-sphere.png`)                   |
 | `data/`                         | O conteúdo da experiência em JSON normalizado (ADR 0013)                  |
 | `scripts/`                      | `validate-content.ts` valida `data/`; `audit-svg.ts` audita os desenhos; `electron-dev.ts` abre o app desktop em desenvolvimento |
-| `src/app/`                      | Inicialização da aplicação (`App.tsx`)                                    |
+| `src/app/`                      | Inicialização da aplicação (`App.tsx`) e leitura da sessão na grade (`SessionReadout`)                                    |
 | `src/app/stage/`                | Palco 1920 × 1080 (`Stage`), cálculo de escala e grade de depuração       |
 | `src/content/`                  | Esquemas (Zod), validador, consultas e carregamento do conteúdo           |
 | `src/design-system/`            | Medidas do grid, `fonts.css` e `tokens.css` (reúne `tokens/`)             |
@@ -69,6 +69,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `src/motion/`                   | Tokens, coreografias, canal de interrupção e flutuação (GSAP, ADR 0021)   |
 | `src/object/`                   | `ObjectDrawing`, leitor de SVG, auditoria dos desenhos e regras de estado |
 | `src/platform/`                 | O que a casca Electron conta à página (`StationInfo`) e `getStation()`    |
+| `src/universe/`                 | O universo (Estado 01): layout e regras, objeto flutuante, chamado e tela (ADR 0022) |
 | `src/dev/showcase/`             | Vitrine de validação, aberta com `?showcase` (ADR 0012); a aba Experiência fica aqui |
 | `src/dev/spike/`                | Teste de desempenho, a aba Desempenho da vitrine (ADR 0018)               |
 | `src/styles/`                   | Estilos globais                                                           |
@@ -328,3 +329,27 @@ A infraestrutura de movimento (`src/motion/`) não anima nenhuma tela ainda: ent
 **Flutuação.** Cada objeto sorteia uma vez (período de 8 a 14 s e três fases) e flutua em seno: amplitude vertical por plano (6, 4 e 3 px), rotação de ±1° (período 1,3×) e deriva de 2 px (1,7×). Por modo: esmaecido até 3 px; selecionado 2 px, sem rotação; parado zero. Trocar de modo faz a amplitude deslizar (95% em 320 ms), sem salto. A flutuação escreve só o `transform` de uma camada própria, dentro do elemento que as coreografias movem, para as duas não brigarem.
 
 **Tamanho e custo.** O módulo, com o GSAP, tem cerca de 100 kB (34 kB compactados) quando é importado. Como nenhuma tela o importa ainda, o aplicativo não muda de tamanho nesta etapa. O kit da Etapa 07a mede transições de CSS; o custo do JavaScript do GSAP entra na medição da 07b e nos testes de campo (Etapa 23).
+
+## Universo (Etapa 11)
+
+O aplicativo abre no **universo** (Estado 01 de Flows 01): o chamado principal e os oito objetos, cada um flutuando e respondendo ao toque. A tela lê o conteúdo pela camada de consultas e fala com a sessão da Etapa 08. A animação de seleção chega na Etapa 13 (ADR 0022).
+
+| Arquivo               | Papel                                                                                              |
+| --------------------- | -------------------------------------------------------------------------------------------------- |
+| `layout.ts`           | Caixas do objeto, do alvo e do rótulo, e `checkUniverseLayout`: as regras do Design System sobre as posições |
+| `texts.ts`            | Os textos do chamado principal                                                                     |
+| `UniverseObject.tsx`  | Um objeto: desenho, rótulo, flutuação (M08) e toque (`usePress`)                                   |
+| `MainPrompt.tsx`      | O chamado principal, com o ícone de toque que pulsa                                                |
+| `Universe.tsx`        | A tela: o chamado e os oito objetos; o toque num objeto despacha `select-object`                   |
+| `universe.css`        | Estilo do objeto (pressionado, esmaecido, rótulo, alvo) e do chamado                               |
+| `index.ts`            | A porta da pasta                                                                                   |
+
+Em `src/app/`, o `App.tsx` carrega o conteúdo, cria a sessão, a entrega por `ExperienceProvider` e reinicia a contagem de inatividade a cada toque na janela; o `SessionReadout.tsx` mostra o estado da sessão quando a grade está ligada (`?grid` ou a tecla G). Com `?showcase`, o universo não é desenhado.
+
+**Um objeto por dentro.** A caixa (posição e tamanho: é o que as coreografias da Etapa 13 vão mover) contém a camada de flutuação (só a flutuação escreve o `transform` dela) e, dentro dela, o corpo (o desenho e o rótulo, que encolhe a 0,96 quando pressionado). O botão de toque é irmão da camada de flutuação, fora das camadas que balançam: o alvo (caixa do desenho mais 16 px) fica parado.
+
+**Layout.** `checkUniverseLayout` confere as posições do arquivo de dados contra o Design System: 96 px entre os desenhos, área de toque (com folga de 8 px para a flutuação) dentro do Palco, rótulo dentro da área útil, nenhum alvo sobre o chamado e nenhum rótulo sobre o alvo de outro objeto. O teste roda a conferência nos dados do projeto: quem mexer nas posições vê o problema na hora.
+
+**Toque e sessão.** O botão do objeto usa `usePress` (pressionado em 80 ms, ação ao soltar dentro do alvo, portão de toque único). Ao soltar, a tela despacha `select-object`. Enquanto a Etapa 13 não existe, a tela fica como está: a mudança de nível só aparece na leitura da sessão.
+
+**Tamanho e custo.** O pacote principal (`index`) passa de 225,5 kB para cerca de 446 kB (de 71,0 para 140,6 kB compactados): traz o conteúdo, os oito desenhos e o GSAP. A vitrine encolhe de 206,0 para cerca de 61 kB, porque as partes em comum passam para o pacote principal. O custo da flutuação de oito objetos no hardware de referência entra na medição da 07b.
