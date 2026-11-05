@@ -4,7 +4,7 @@ Experiência interativa para instalação permanente da Casa de Metal: telas
 touchscreen em modo quiosque onde visitantes investigam objetos cotidianos e
 descobrem os metais e minerais que os compõem.
 
-> **Status:** em desenvolvimento — Etapa 09 de 25.
+> **Status:** em desenvolvimento — Etapa 10 de 25.
 
 ## Escopo
 
@@ -19,7 +19,7 @@ aparecem como opção de exploração.
 - Zod (validação dos dados)
 - Zustand (estado da experiência)
 - Electron 44 (casca desktop, modo quiosque)
-- Previsto: GSAP (motion)
+- GSAP 3 + @gsap/react (motion)
 
 ## Requisitos
 
@@ -69,6 +69,10 @@ A aba **Experiência** da vitrine (`?showcase`) navega pela máquina de estados 
 ## Toque (um dedo por vez)
 
 A tela inteira aceita **um toque de cada vez**: o primeiro dedo que pousa vale, mesmo no fundo, e os outros são ignorados até ele soltar. Um elemento ainda entrando (opacidade abaixo de 50%) ignora o toque. A ação acontece ao soltar dentro do alvo; sair do alvo cancela. Os botões já seguem essas regras (`usePress` e `src/interaction/`); as decisões estão no ADR 0020.
+
+## Movimento (motion)
+
+A base das animações M01 a M08 fica em `src/motion/`: os tokens de duração e curva (espelho do CSS), o padrão de coreografia (cada tabela do Motion vira dados), o **canal** que toca uma coreografia por vez e a flutuação em espera (M08). Um toque novo durante uma transição **interrompe e redireciona a partir dos valores atuais**, sem salto e sem fila. O React decide o que existe; o GSAP decide como se move. Nenhuma tela usa o motion ainda: ele entra a partir da Etapa 11. As decisões estão no ADR 0021.
 
 ## Convenções
 
