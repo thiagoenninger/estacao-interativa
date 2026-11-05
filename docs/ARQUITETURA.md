@@ -22,7 +22,7 @@ Aplicação desktop para Windows 11, em modo quiosque, executada em três estaç
 | Plataforma  | Electron: janela, quiosque, escala, logs, atualização |
 | Experiência | Máquina de estados, sessão e retorno automático       |
 | Interface   | Componentes React do Design System                    |
-| Motion      | Coreografias M01–M08 (GSAP) e flutuação (CSS)         |
+| Motion      | Coreografias M01–M08 (GSAP) e flutuação em JS         |
 | Conteúdo    | Dados JSON validados e consultas                      |
 
 
@@ -45,7 +45,7 @@ Modelo normalizado: Elemento, Material, FonteMineral, RotaDeObtenção, Objeto, 
 
 Instalador publicado no Github Releases. Atualização remota prevista para a Etapa 24.
 
-## Estrutura atual do código (Etapa 09)
+## Estrutura atual do código (Etapa 10)
 
 | Pasta                           | Conteúdo                                                                  |
 | ------------------------------- | ------------------------------------------------------------------------- |
@@ -66,7 +66,7 @@ Instalador publicado no Github Releases. Atualização remota prevista para a Et
 | `src/design-system/background/` | `Background`: retícula e marcas de registro                               |
 | `src/experience/`               | Máquina de estados, store, sessão e serviço de inatividade (ADR 0019)     |
 | `src/interaction/`              | O portão de toque: um dedo por vez e elemento entrando ignora o toque (ADR 0020) |
-| `src/motion/`                   | Espelho em TypeScript dos tokens de movimento                             |
+| `src/motion/`                   | Tokens, coreografias, canal de interrupção e flutuação (GSAP, ADR 0021)   |
 | `src/object/`                   | `ObjectDrawing`, leitor de SVG, auditoria dos desenhos e regras de estado |
 | `src/platform/`                 | O que a casca Electron conta à página (`StationInfo`) e `getStation()`    |
 | `src/dev/showcase/`             | Vitrine de validação, aberta com `?showcase` (ADR 0012); a aba Experiência fica aqui |
@@ -305,3 +305,26 @@ A tela inteira aceita **um toque de cada vez** (decisão C10). O portão (`src/i
 **Um toque novo vale na hora.** O segundo dedo só é descartado **enquanto o primeiro está na tela**. Depois que ele solta, qualquer toque novo conta, mesmo no meio de uma transição; quem redireciona a animação é a Etapa 10.
 
 **O que a tela não deixa travar.** Um "soltar" perdido não prende o portão: o mesmo `id` pousando de novo começa um toque novo, um dedo que o navegador chama de primeiro substitui um fantasma, um mouse solto fora da janela é liberado no movimento seguinte e a janela perdendo o foco zera tudo.
+
+## Motion (Etapa 10)
+
+A infraestrutura de movimento (`src/motion/`) não anima nenhuma tela ainda: entrega as peças com que as Etapas 11 a 19 escrevem M01 a M08. Ela segue o princípio "o React decide o que existe, o GSAP decide como se move" (ADR 0021).
+
+| Arquivo                | Papel                                                                                          |
+| ---------------------- | ---------------------------------------------------------------------------------------------- |
+| `tokens.ts`            | Durações, curvas, passo de escalonamento e regras de espera (espelho do CSS, desde a Etapa 03) |
+| `easing.ts`            | `easingFunction`: a curva `cubic-bezier` de cada token, resolvida em JavaScript                 |
+| `choreography.ts`      | `defineChoreography`: uma tabela do Motion como dados (trilhas com início, duração e curva)    |
+| `channel.ts`           | `createMotionChannel`: toca uma coreografia por vez; um `play` novo interrompe o anterior       |
+| `float.ts`             | `createFloatModel`: a flutuação senoidal de um objeto (M08), pura                               |
+| `float-driver.ts`      | `startFloat`: aplica a flutuação a um elemento a cada quadro                                    |
+| `hooks.ts`             | `useMotionChannel` e `useFloat`: ciclo de vida no React (`@gsap/react`)                         |
+| `random.ts`            | `createRandom`: sorteio com semente, para os testes                                             |
+
+**Coreografia é dado.** Uma `Track` diz o que se move (`target`, um nome), quando começa (`at`, em ms), quanto dura e com que curva (`duration` e `ease`, sempre nomes de token), de onde sai (`from`, só para o que está entrando) e para onde vai (`to`). `defineChoreography` confere tudo na hora de definir: só `opacity`, `x`, `y`, `scale`, `scaleX`, `scaleY`, `rotation` e as três propriedades de traço do M02 (`strokeOpacity`, `strokeWidth`, `strokeDashoffset`); nada que force o navegador a refazer o layout. Os elementos reais só entram na hora de tocar: `channel.play(coreografia, { nome: elemento })`.
+
+**Interrupção.** O canal guarda a coreografia em andamento. Um `play` novo constrói a nova linha do tempo (se um alvo obrigatório faltar, falha sem mexer na que está tocando), corta a antiga onde ela está e começa a nova **a partir dos valores atuais**: nada salta e nada entra em fila. O `from` de uma trilha só vale para o que a coreografia interrompida não estava movendo; o que já estava a meio caminho continua dali.
+
+**Flutuação.** Cada objeto sorteia uma vez (período de 8 a 14 s e três fases) e flutua em seno: amplitude vertical por plano (6, 4 e 3 px), rotação de ±1° (período 1,3×) e deriva de 2 px (1,7×). Por modo: esmaecido até 3 px; selecionado 2 px, sem rotação; parado zero. Trocar de modo faz a amplitude deslizar (95% em 320 ms), sem salto. A flutuação escreve só o `transform` de uma camada própria, dentro do elemento que as coreografias movem, para as duas não brigarem.
+
+**Tamanho e custo.** O módulo, com o GSAP, tem cerca de 100 kB (34 kB compactados) quando é importado. Como nenhuma tela o importa ainda, o aplicativo não muda de tamanho nesta etapa. O kit da Etapa 07a mede transições de CSS; o custo do JavaScript do GSAP entra na medição da 07b e nos testes de campo (Etapa 23).
